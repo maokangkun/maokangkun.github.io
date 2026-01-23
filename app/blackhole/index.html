@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑洞 · Black Hole</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: #000;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .info {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            text-align: center;
+            z-index: 10;
+            animation: fadeIn 2s ease-in;
+            pointer-events: none;
+        }
+
+        .info h1 {
+            font-size: 3.5rem;
+            font-weight: 100;
+            letter-spacing: 0.3em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .info p {
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+
+        .tip {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            z-index: 10;
+            pointer-events: none;
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .info h1 { font-size: 2rem; }
+            .info p { font-size: 0.7rem; }
+            .tip { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div class="tip">拖拽旋转 · 滚轮缩放</div>
+    <div class="info">
+        <h1>BLACK HOLE</h1>
+        <p>EVENT HORIZON</p>
+    </div>
+    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        
+        let scene, camera, renderer, controls;
+        let blackHole, accretionDisk, innerDisk, jetTop, jetBottom;
+        let particleSystem;
+        
+        function init() {
+            // 场景
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.001);
+            
+            // 相机
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 5, 15);
+            
+            // 渲染器
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.getElementById('container').appendChild(renderer.domElement);
+            
+            // 控制器
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+            controls.minDistance = 5;
+            controls.maxDistance = 50;
+            
+            // 黑洞核心（事件视界）
+            const coreGeometry = new THREE.SphereGeometry(1, 64, 64);
+            const coreMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x000000,
+                transparent: true,
+                opacity: 1
+            });
+            blackHole = new THREE.Mesh(coreGeometry, coreMaterial);
+            scene.add(blackHole);
+            
+            // 事件视界光环（引力透镜效果）
+            const horizonGeometry = new THREE.RingGeometry(1.0, 1.15, 64);
+            const horizonMaterial = new THREE.ShaderMaterial({
+                transparent: true,
+                side: THREE.DoubleSide,
+                blending: THREE.AdditiveBlending,
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        float dist = length(vUv - 0.5) * 2.0;
+                        float angle = atan(vUv.y - 0.5, vUv.x - 0.5);
+                        float shimmer = sin(angle * 12.0 + time) * 0.3 + 0.7;
+                        float alpha = (1.0 - abs(dist - 0.5) * 3.0) * shimmer;
+                        vec3 color = vec3(1.0, 0.7, 0.3);
+                        gl_FragColor = vec4(color, alpha * 0.9);
+                    }
+                `
+            });
+            const horizon = new THREE.Mesh(horizonGeometry, horizonMaterial);
+            horizon.rotation.x = Math.PI / 2;
+            blackHole.add(horizon);
+            
+            // 主吸积盘（薄盘结构 - 更大）
+            const diskGeometry = new THREE.RingGeometry(1.3, 5.5, 128);
+            const diskMaterial = new THREE.ShaderMaterial({
+                transparent: true,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    varying vec2 vUv;
+                    
+                    float random(vec2 st) {
+                        return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+                    }
+                    
+                    void main() {
+                        vec2 center = vec2(0.5, 0.5);
+                        float dist = length(vUv - center) * 2.0;
+                        float angle = atan(vUv.y - center.y, vUv.x - center.x);
+                        
+                        // 螺旋结构
+                        float spiral = sin(angle * 5.0 - dist * 3.0 - time * 1.5) * 0.5 + 0.5;
+                        
+                        // 多普勒效应（相对论性光束效应）
+                        float doppler = sin(angle - time * 0.8) * 0.4 + 0.6;
+                        
+                        // 径向衰减
+                        float radialFade = smoothstep(1.0, 0.3, dist) * smoothstep(0.0, 0.2, dist);
+                        
+                        // 湍流噪声
+                        float noise = random(vec2(angle * 10.0 + time * 0.1, dist * 5.0)) * 0.3 + 0.7;
+                        
+                        // 颜色渐变：内侧白黄（高温），外侧橙红（低温）
+                        vec3 innerColor = vec3(1.0, 0.95, 0.8);
+                        vec3 outerColor = vec3(1.0, 0.3, 0.05);
+                        vec3 color = mix(innerColor, outerColor, dist);
+                        
+                        // 应用多普勒效应的颜色变化
+                        color = mix(color, vec3(1.0, 0.9, 0.7), doppler * 0.3);
+                        
+                        float alpha = radialFade * spiral * noise * 0.5 * doppler;
+                        gl_FragColor = vec4(color, alpha);
+                    }
+                `
+            });
+            accretionDisk = new THREE.Mesh(diskGeometry, diskMaterial);
+            accretionDisk.rotation.x = Math.PI / 2;
+            scene.add(accretionDisk);
+            
+            // 内侧高温层（更亮）
+            const innerDiskGeometry = new THREE.RingGeometry(1.15, 2.2, 128);
+            const innerDiskMaterial = new THREE.ShaderMaterial({
+                transparent: true,
+                side: THREE.DoubleSide,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 center = vec2(0.5, 0.5);
+                        float dist = length(vUv - center) * 2.0;
+                        float angle = atan(vUv.y - center.y, vUv.x - center.x);
+                        
+                        float doppler = sin(angle - time * 2.0) * 0.5 + 0.5;
+                        float brightness = (1.0 - dist) * doppler;
+                        
+                        vec3 color = mix(vec3(1.0, 0.6, 0.1), vec3(1.0, 1.0, 0.9), doppler);
+                        float alpha = brightness * 0.7;
+                        
+                        gl_FragColor = vec4(color, alpha);
+                    }
+                `
+            });
+            innerDisk = new THREE.Mesh(innerDiskGeometry, innerDiskMaterial);
+            innerDisk.rotation.x = Math.PI / 2;
+            scene.add(innerDisk);
+            
+            // 相对论性喷流（更明显）
+            const jetGeometry = new THREE.CylinderGeometry(0.08, 0.25, 10, 16);
+            const jetMaterial = new THREE.ShaderMaterial({
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        float flow = fract(vUv.y * 4.0 - time);
+                        float center = 1.0 - abs(vUv.x - 0.5) * 2.0;
+                        float alpha = (1.0 - vUv.y * 0.5) * flow * center * 0.7;
+                        vec3 color = vec3(0.5, 0.7, 1.0); // 更亮的蓝色
+                        gl_FragColor = vec4(color, alpha);
+                    }
+                `
+            });
+            
+            jetTop = new THREE.Mesh(jetGeometry, jetMaterial);
+            jetTop.position.y = 5.5;
+            scene.add(jetTop);
+            
+            jetBottom = new THREE.Mesh(jetGeometry, jetMaterial);
+            jetBottom.position.y = -5.5;
+            scene.add(jetBottom);
+            
+            // 粒子系统
+            const particleCount = 3000;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+            
+            for (let i = 0; i < particleCount; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.random() * 20 + 5;
+                const height = (Math.random() - 0.5) * 10;
+                
+                positions[i * 3] = Math.cos(angle) * radius;
+                positions[i * 3 + 1] = height;
+                positions[i * 3 + 2] = Math.sin(angle) * radius;
+                
+                // 根据距离设置真实颜色（热辐射：红->橙->黄->白）
+                const dist = Math.sqrt(
+                    positions[i * 3] * positions[i * 3] + 
+                    positions[i * 3 + 2] * positions[i * 3 + 2]
+                );
+                const heat = Math.max(0, 1 - dist / 25);
+                
+                if (heat > 0.7) {
+                    // 近距离：白色-黄色（极高温）
+                    colors[i * 3] = 1;
+                    colors[i * 3 + 1] = 0.9 + Math.random() * 0.1;
+                    colors[i * 3 + 2] = 0.6 + Math.random() * 0.2;
+                } else if (heat > 0.4) {
+                    // 中距离：橙色（高温）
+                    colors[i * 3] = 1;
+                    colors[i * 3 + 1] = 0.4 + Math.random() * 0.3;
+                    colors[i * 3 + 2] = 0.1 + Math.random() * 0.2;
+                } else {
+                    // 远距离：红色-暗红（中温）
+                    colors[i * 3] = 0.8 + Math.random() * 0.2;
+                    colors[i * 3 + 1] = 0.1 + Math.random() * 0.2;
+                    colors[i * 3 + 2] = 0.05 + Math.random() * 0.1;
+                }
+                
+                sizes[i] = Math.random() * 3 + 1;
+            }
+            
+            const particleGeometry = new THREE.BufferGeometry();
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            
+            // 创建圆形粒子纹理
+            const canvas = document.createElement('canvas');
+            canvas.width = 32;
+            canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            
+            const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.8)');
+            gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 32, 32);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.15,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending,
+                sizeAttenuation: true,
+                map: texture,
+                depthWrite: false
+            });
+            
+            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particleSystem);
+            
+            // 环境光
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+            scene.add(ambientLight);
+            
+            // 点光源
+            const pointLight = new THREE.PointLight(0xffaa00, 2, 50);
+            pointLight.position.set(0, 0, 0);
+            scene.add(pointLight);
+            
+            // 窗口调整
+            window.addEventListener('resize', onWindowResize);
+            
+            animate();
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const time = Date.now() * 0.001;
+            
+            // 吸积盘旋转（外层慢）
+            accretionDisk.rotation.z += 0.003;
+            accretionDisk.material.uniforms.time.value = time;
+            
+            // 内层吸积盘旋转（内层快 - 开普勒定律）
+            innerDisk.rotation.z += 0.008;
+            innerDisk.material.uniforms.time.value = time;
+            
+            // 事件视界光环动画
+            if (blackHole.children[0]) {
+                blackHole.children[0].material.uniforms.time.value = time;
+            }
+            
+            // 喷流动画
+            jetTop.material.uniforms.time.value = time;
+            jetBottom.material.uniforms.time.value = time;
+            
+            // 粒子螺旋运动
+            const positions = particleSystem.geometry.attributes.position.array;
+            const colors = particleSystem.geometry.attributes.color.array;
+            
+            for (let i = 0; i < positions.length; i += 3) {
+                const x = positions[i];
+                const y = positions[i + 1];
+                const z = positions[i + 2];
+                
+                const dist = Math.sqrt(x * x + z * z);
+                const angle = Math.atan2(z, x);
+                
+                if (dist < 1.2) {
+                    // 重置粒子
+                    const newAngle = Math.random() * Math.PI * 2;
+                    const newRadius = Math.random() * 20 + 5;
+                    positions[i] = Math.cos(newAngle) * newRadius;
+                    positions[i + 1] = (Math.random() - 0.5) * 10;
+                    positions[i + 2] = Math.sin(newAngle) * newRadius;
+                    
+                    // 重置为冷色（远离黑洞）
+                    colors[i] = 0.8 + Math.random() * 0.2;
+                    colors[i + 1] = 0.1 + Math.random() * 0.2;
+                    colors[i + 2] = 0.05 + Math.random() * 0.1;
+                } else {
+                    // 螺旋靠近
+                    const spiral = angle + 0.02;
+                    const newDist = dist - 0.015 - (1 / dist) * 0.01;
+                    positions[i] = Math.cos(spiral) * newDist;
+                    positions[i + 2] = Math.sin(spiral) * newDist;
+                    positions[i + 1] *= 0.99;
+                    
+                    // 根据距离更新颜色（越近越热）
+                    const heat = Math.max(0, 1 - newDist / 25);
+                    if (heat > 0.7) {
+                        // 白色-黄色
+                        colors[i] = 1;
+                        colors[i + 1] = 0.95;
+                        colors[i + 2] = 0.7;
+                    } else if (heat > 0.4) {
+                        // 橙色
+                        colors[i] = 1;
+                        colors[i + 1] = 0.5;
+                        colors[i + 2] = 0.2;
+                    }
+                }
+            }
+            particleSystem.geometry.attributes.position.needsUpdate = true;
+            particleSystem.geometry.attributes.color.needsUpdate = true;
+            
+            // 黑洞自转
+            blackHole.rotation.y += 0.001;
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
