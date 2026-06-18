@@ -16,6 +16,7 @@
       <div class="progress-wrap" aria-label="学习进度">
         <span id="progressText">0%</span>
         <div class="progress-track"><div id="progressBar"></div></div>
+        <span id="speechStatus" class="speech-status" aria-live="polite">朗读待命</span>
       </div>
     </header>
 
@@ -55,6 +56,74 @@
         </section>
       </section>
 
+      <section class="study-grid">
+        <section class="lesson-card">
+          <div class="section-heading">
+            <span>今日单词</span>
+            <button id="vocabReview" class="small-btn">随机复习</button>
+          </div>
+          <div id="vocabGrid" class="vocab-grid"></div>
+        </section>
+
+        <section class="lesson-card">
+          <div class="section-heading">
+            <span>迷你语法</span>
+            <button id="grammarSpeak" class="small-btn">读例句</button>
+          </div>
+          <div id="grammarPanel" class="grammar-panel"></div>
+        </section>
+      </section>
+
+      <section class="ai-panel">
+        <div class="section-heading">
+          <span>AI 随机拓展</span>
+          <span id="aiStatus" class="ai-status">未连接</span>
+        </div>
+        <div class="ai-controls">
+          <label>
+            AI 代理地址
+            <input id="aiProxyUrl" type="url" placeholder="https://your-worker.workers.dev" autocomplete="off" />
+          </label>
+          <label>
+            OpenRouter Key（本机备用）
+            <input id="openrouterKey" type="password" placeholder="sk-or-v1-..." autocomplete="off" />
+          </label>
+          <label>
+            免费模型
+            <select id="openrouterModel">
+              <option value="deepseek/deepseek-chat-v3-0324:free">deepseek/deepseek-chat-v3-0324:free</option>
+            </select>
+          </label>
+          <label>
+            场景
+            <select id="aiScenario">
+              <option value="跟日本店员交流">跟日本店员交流</option>
+              <option value="在车站问路和换乘">在车站问路和换乘</option>
+              <option value="餐厅点餐和表达忌口">餐厅点餐和表达忌口</option>
+              <option value="酒店入住和寄存行李">酒店入住和寄存行李</option>
+              <option value="购物退税和付款">购物退税和付款</option>
+              <option value="身体不舒服和紧急求助">身体不舒服和紧急求助</option>
+            </select>
+          </label>
+          <label>
+            难度
+            <select id="aiLevel">
+              <option value="零基础">零基础</option>
+              <option value="入门进阶">入门进阶</option>
+              <option value="旅行实战">旅行实战</option>
+            </select>
+          </label>
+        </div>
+        <div class="ai-actions">
+          <button id="saveAiSettings" class="small-btn">保存设置</button>
+          <button id="loadFreeModels" class="small-btn">加载免费模型</button>
+          <button id="generateAiLesson" class="primary-btn">生成随机内容</button>
+        </div>
+        <div id="aiResult" class="ai-result">
+          <p class="empty-state">配置 AI 代理后会调用真实大模型；没有代理或 Key 时，也会使用本地随机生成器生成新的短句、单词、语法和对话练习。</p>
+        </div>
+      </section>
+
       <section class="practice-grid">
         <div class="practice-panel">
           <div class="section-heading">
@@ -86,6 +155,7 @@
       </section>
     </main>
 
+    <script src="./config.local.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

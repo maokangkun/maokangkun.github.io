@@ -73,6 +73,12 @@ h1 {
   text-align: right;
 }
 
+.speech-status {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
 .progress-track {
   height: 10px;
   overflow: hidden;
@@ -178,7 +184,8 @@ h1 {
 }
 
 .workbench,
-.practice-grid {
+.practice-grid,
+.study-grid {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
   gap: 18px;
@@ -189,9 +196,14 @@ h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.study-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.78fr);
+}
+
 .daily-card,
 .lesson-card,
-.practice-panel {
+.practice-panel,
+.ai-panel {
   border: 2px solid var(--ink);
   border-radius: 8px;
   background: var(--panel);
@@ -200,8 +212,13 @@ h1 {
 
 .daily-card,
 .lesson-card,
-.practice-panel {
+.practice-panel,
+.ai-panel {
   padding: 18px;
+}
+
+.ai-panel {
+  margin-top: 18px;
 }
 
 .section-heading {
@@ -246,9 +263,20 @@ h1 {
 
 .mode.active,
 .small-btn:hover,
+.primary-btn:hover,
 .icon-btn:hover {
   background: var(--mint);
   color: #fff;
+}
+
+.primary-btn {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--gold);
+  cursor: pointer;
+  font-weight: 900;
 }
 
 .task-list {
@@ -302,7 +330,12 @@ h1 {
 .kana,
 .romaji,
 .meaning,
-.tip {
+.tip,
+.vocab-reading,
+.vocab-meaning,
+.grammar-note,
+.grammar-example,
+.pattern-text {
   margin: 0;
   line-height: 1.45;
 }
@@ -324,6 +357,178 @@ h1 {
 .tip {
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.vocab-card {
+  display: grid;
+  gap: 6px;
+  min-height: 118px;
+  padding: 12px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fffdf8;
+  cursor: pointer;
+}
+
+.vocab-card:hover {
+  border-color: var(--sky);
+  background: #f3f9ff;
+}
+
+.vocab-word {
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.vocab-reading {
+  color: var(--plum);
+  font-weight: 800;
+}
+
+.vocab-meaning {
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.grammar-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.pattern-box {
+  padding: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fff5d7;
+}
+
+.pattern-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--coral);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pattern-text {
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.grammar-note {
+  color: #34444f;
+}
+
+.grammar-examples {
+  display: grid;
+  gap: 9px;
+}
+
+.grammar-example {
+  padding: 10px 12px;
+  border-left: 5px solid var(--mint);
+  background: #f0fff9;
+  color: var(--ink);
+  font-weight: 750;
+}
+
+.ai-status {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.ai-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.2fr) minmax(220px, 1.2fr) minmax(220px, 1.1fr) repeat(2, minmax(150px, 0.75fr));
+  gap: 12px;
+}
+
+.ai-controls label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.ai-controls input,
+.ai-controls select {
+  min-height: 40px;
+  width: 100%;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #fffdf8;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 750;
+  padding: 0 10px;
+}
+
+.ai-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ai-result {
+  margin-top: 16px;
+}
+
+.empty-state {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ai-result-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 14px;
+}
+
+.ai-block {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.ai-block h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ai-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-chip {
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fffdf8;
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.ai-dialog {
+  padding: 12px;
+  border: 2px dashed var(--ink);
+  border-radius: 8px;
+  background: #f3f9ff;
+  line-height: 1.65;
 }
 
 .phrase-actions {
@@ -428,6 +633,9 @@ h1 {
 
   .day-tabs,
   .workbench,
+  .study-grid,
+  .ai-controls,
+  .ai-result-grid,
   .practice-grid,
   .phrase-grid {
     grid-template-columns: 1fr;
@@ -474,5 +682,9 @@ h1 {
 
   .kana-deck {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vocab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
