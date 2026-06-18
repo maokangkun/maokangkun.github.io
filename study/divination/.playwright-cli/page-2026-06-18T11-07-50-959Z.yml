@@ -1,0 +1,171 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "回到首页" [ref=e3] [cursor=pointer]:
+      - /url: "#home"
+      - generic [ref=e4]: 卜
+      - generic [ref=e5]: 一周命理入门
+    - navigation "教程导航" [ref=e6]:
+      - link "体系地图" [ref=e7] [cursor=pointer]:
+        - /url: "#map"
+      - link "七天计划" [ref=e8] [cursor=pointer]:
+        - /url: "#week"
+      - link "日常占卜" [ref=e9] [cursor=pointer]:
+        - /url: "#practice"
+      - link "学习笔记" [ref=e10] [cursor=pointer]:
+        - /url: "#notes"
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e14]:
+        - paragraph [ref=e15]: 传统术数 · 文化理解 · 日常反思
+        - heading "用一周建立命理学的第一张地图" [level=1] [ref=e16]
+        - paragraph [ref=e17]: 从阴阳五行、天干地支开始，快速走过四柱八字、六十四卦、紫微斗数、 奇门遁甲、手相面相与风水。每天都有一个可操作练习，把“听说过” 变成“能解释、会记录、懂边界”。
+        - generic [ref=e18]:
+          - link "开始七天学习" [ref=e19] [cursor=pointer]:
+            - /url: "#week"
+          - link "直接试一次占卜" [ref=e20] [cursor=pointer]:
+            - /url: "#practice"
+      - generic "今日学习焦点" [ref=e21]:
+        - generic [ref=e22]: 今日建议
+        - strong [ref=e23]: 奇门遁甲九宫
+        - generic [ref=e24]: 先学结构，再学技法；先问好问题，再看象意。
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: 第一步
+        - heading "命理体系地图" [level=2] [ref=e28]
+        - paragraph [ref=e29]: 把不同术数放到同一张桌面上：它们关注的问题、输入资料和常见用途并不一样。
+      - generic [ref=e30]:
+        - complementary "选择术数模块" [ref=e31]:
+          - button "阴阳五行 基础 · 建立象意词典，理解生克制化" [ref=e32] [cursor=pointer]:
+            - strong [ref=e33]: 阴阳五行
+            - generic [ref=e34]: 基础 · 建立象意词典，理解生克制化
+          - button "四柱八字 命盘 · 性格倾向、资源模式、阶段性主题" [ref=e35] [cursor=pointer]:
+            - strong [ref=e36]: 四柱八字
+            - generic [ref=e37]: 命盘 · 性格倾向、资源模式、阶段性主题
+          - button "六十四卦 占问 · 选择、趋势、关系变化" [ref=e38] [cursor=pointer]:
+            - strong [ref=e39]: 六十四卦
+            - generic [ref=e40]: 占问 · 选择、趋势、关系变化
+          - button "紫微斗数 命盘 · 人生领域分布、关系与职业主题" [ref=e41] [cursor=pointer]:
+            - strong [ref=e42]: 紫微斗数
+            - generic [ref=e43]: 命盘 · 人生领域分布、关系与职业主题
+          - button "奇门遁甲 时空 · 行动方位、沟通策略、局势判断" [ref=e44] [cursor=pointer]:
+            - strong [ref=e45]: 奇门遁甲
+            - generic [ref=e46]: 时空 · 行动方位、沟通策略、局势判断
+          - button "手相面相 观察 · 观察习惯、状态提醒、沟通线索" [ref=e47] [cursor=pointer]:
+            - strong [ref=e48]: 手相面相
+            - generic [ref=e49]: 观察 · 观察习惯、状态提醒、沟通线索
+          - button "风水 空间 · 居住舒适度、专注与休息环境" [ref=e50] [cursor=pointer]:
+            - strong [ref=e51]: 风水
+            - generic [ref=e52]: 空间 · 居住舒适度、专注与休息环境
+        - article [ref=e53]:
+          - generic [ref=e54]:
+            - paragraph [ref=e55]: 基础
+            - heading "阴阳五行" [level=3] [ref=e56]
+            - paragraph [ref=e57]: 阴阳看对待，五行看流转。它是大多数命理系统的共同语言：木火土金水不是物品清单，而是生长、发散、承载、收敛、润下的关系模型。
+          - generic [ref=e59]:
+            - generic [ref=e60]:
+              - generic [ref=e61]: 核心输入
+              - strong [ref=e62]: 事物状态、季节、方位、颜色、性情
+            - generic [ref=e63]:
+              - generic [ref=e64]: 适合问题
+              - strong [ref=e65]: 建立象意词典，理解生克制化
+            - generic [ref=e66]:
+              - generic [ref=e67]: 一周目标
+              - strong [ref=e68]: 能画出生克图，并解释一个日常现象
+    - generic [ref=e69]:
+      - generic [ref=e70]:
+        - paragraph [ref=e71]: 七天路线
+        - heading "每天一个主题，一次练习" [level=2] [ref=e72]
+        - paragraph [ref=e73]: 一周不追求“断事如神”，而是建立概念、流程、象意和记录习惯。
+      - generic [ref=e74]:
+        - tablist "七天学习计划" [ref=e75]:
+          - button "Day 1 阴阳五行与象意词" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: Day 1
+            - strong [ref=e78]: 阴阳五行与象意词
+          - button "Day 2 天干地支与四柱八" [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: Day 2
+            - strong [ref=e81]: 天干地支与四柱八
+          - button "Day 3 六十四卦与问题设" [ref=e82] [cursor=pointer]:
+            - generic [ref=e83]: Day 3
+            - strong [ref=e84]: 六十四卦与问题设
+          - button "Day 4 紫微斗数十二宫" [ref=e85] [cursor=pointer]:
+            - generic [ref=e86]: Day 4
+            - strong [ref=e87]: 紫微斗数十二宫
+          - button "Day 5 奇门遁甲九宫与八" [ref=e88] [cursor=pointer]:
+            - generic [ref=e89]: Day 5
+            - strong [ref=e90]: 奇门遁甲九宫与八
+          - button "Day 6 手相面相与观察边" [ref=e91] [cursor=pointer]:
+            - generic [ref=e92]: Day 6
+            - strong [ref=e93]: 手相面相与观察边
+          - button "Day 7 风水、整合与复盘" [ref=e94] [cursor=pointer]:
+            - generic [ref=e95]: Day 7
+            - strong [ref=e96]: 风水、整合与复盘
+        - article [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - paragraph [ref=e100]: Day 1
+              - heading "阴阳五行与象意词典" [level=3] [ref=e101]
+            - button "标记今天课程完成" [ref=e102] [cursor=pointer]: ✓
+          - paragraph [ref=e103]: 先学共同语言。把阴阳理解为相对关系，把五行理解为运动阶段，建立自己的象意卡片。
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - heading "今天要会" [level=4] [ref=e106]
+              - list [ref=e107]:
+                - listitem [ref=e108]: 阴阳：动静、内外、显隐、寒热
+                - listitem [ref=e109]: 五行相生：木火土金水循环
+                - listitem [ref=e110]: 五行相克：约束不是破坏，而是形成边界
+            - generic [ref=e111]:
+              - heading "动手练习" [level=4] [ref=e112]
+              - list [ref=e113]:
+                - listitem [ref=e114]: 观察今天的天气、情绪和工作状态，用五行各写一个词
+                - listitem [ref=e115]: 画一张生克图，给每个元素配一个生活例子
+          - generic [ref=e116]:
+            - generic [ref=e117]: 今日一句笔记
+            - textbox "今日一句笔记" [ref=e118]:
+              - /placeholder: 例如：五行不是五种物质，更像五种关系和运动状态。
+    - generic [ref=e119]:
+      - generic [ref=e120]:
+        - paragraph [ref=e121]: 练习台
+        - heading "日常占卜与入门推演" [level=2] [ref=e122]
+        - paragraph [ref=e123]: 选择一个问题，保留结果和你的解释。命理最有价值的部分，常常来自复盘。
+      - tablist "练习类型" [ref=e124]:
+        - button "六十四卦" [ref=e125] [cursor=pointer]
+        - button "四柱八字" [ref=e126] [cursor=pointer]
+        - button "紫微斗数" [ref=e127] [cursor=pointer]
+        - button "奇门遁甲" [ref=e128] [cursor=pointer]
+        - button "手相面相" [ref=e129] [cursor=pointer]
+        - button "风水" [ref=e130] [cursor=pointer]
+      - generic [ref=e132]:
+        - heading "三枚硬币起卦" [level=3] [ref=e133]
+        - paragraph [ref=e134]: 输入一个具体问题，点击起卦。系统会模拟六次掷币，从下往上成卦，并给出学习版象意。
+        - generic [ref=e135]:
+          - generic [ref=e136]: 问题
+          - textbox "问题" [ref=e137]:
+            - /placeholder: 今天是否适合推进某个计划？
+          - button "起卦" [ref=e138] [cursor=pointer]
+    - generic [ref=e141]:
+      - generic [ref=e142]:
+        - paragraph [ref=e143]: 复盘
+        - heading "你的学习笔记" [level=2] [ref=e144]
+        - paragraph [ref=e145]: 记录问题、结果、当下理解和后续验证。学习占卜时，复盘比一次结果更重要。
+      - generic [ref=e146]:
+        - generic [ref=e147]:
+          - generic [ref=e148]:
+            - text: 主题
+            - combobox "主题" [ref=e149]:
+              - option "六十四卦" [selected]
+              - option "四柱八字"
+              - option "紫微斗数"
+              - option "奇门遁甲"
+              - option "手相面相"
+              - option "风水"
+          - generic [ref=e150]:
+            - text: 问题或观察
+            - textbox "问题或观察" [ref=e151]:
+              - /placeholder: 我今天想观察什么？
+          - generic [ref=e152]:
+            - text: 解释与复盘
+            - textbox "解释与复盘" [ref=e153]:
+              - /placeholder: 记录象意、你的判断、后续实际发生了什么。
+          - button "保存笔记" [ref=e154] [cursor=pointer]
+        - generic [ref=e156]: 还没有笔记。做一次练习后，把问题、结果和你的解释保存下来。
+  - contentinfo [ref=e157]: 学习提醒：本教程用于传统文化学习和自我反思，不替代医学、法律、投资等专业判断。

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一周命理入门交互教程</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23fbfaf5'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='34' fill='%23a5422e'%3E%E5%8D%9C%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="回到首页">
+      <span class="brand-mark">卜</span>
+      <span>一周命理入门</span>
+    </a>
+    <nav class="topnav" aria-label="教程导航">
+      <a href="#map">体系地图</a>
+      <a href="#library">知识库</a>
+      <a href="#week">七天计划</a>
+      <a href="#practice">日常占卜</a>
+      <a href="#notes">学习笔记</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <canvas id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <p class="eyebrow">传统术数 · 文化理解 · 日常反思</p>
+        <h1>用一周建立命理学的第一张地图</h1>
+        <p>
+          从阴阳五行、天干地支开始，快速走过四柱八字、六十四卦、紫微斗数、
+          奇门遁甲、手相面相与风水。每天都有一个可操作练习，把“听说过”
+          变成“能解释、会记录、懂边界”。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#week">开始七天学习</a>
+          <a class="button ghost" href="#practice">直接试一次占卜</a>
+        </div>
+      </div>
+      <div class="hero-panel" aria-label="今日学习焦点">
+        <span>今日建议</span>
+        <strong id="todayFocus">阴阳五行</strong>
+        <small>先学结构，再学技法；先问好问题，再看象意。</small>
+      </div>
+    </section>
+
+    <section id="map" class="section">
+      <div class="section-head">
+        <p class="eyebrow">第一步</p>
+        <h2>命理体系地图</h2>
+        <p>把不同术数放到同一张桌面上：它们关注的问题、输入资料和常见用途并不一样。</p>
+      </div>
+      <div class="tool-shell map-shell">
+        <aside class="module-list" id="moduleList" aria-label="选择术数模块"></aside>
+        <article class="module-detail">
+          <div>
+            <p class="eyebrow" id="moduleTag">基础</p>
+            <h3 id="moduleTitle">阴阳五行</h3>
+            <p id="moduleIntro"></p>
+          </div>
+          <canvas id="moduleCanvas" width="760" height="360"></canvas>
+          <div class="info-grid">
+            <div>
+              <span>核心输入</span>
+              <strong id="moduleInput"></strong>
+            </div>
+            <div>
+              <span>适合问题</span>
+              <strong id="moduleUse"></strong>
+            </div>
+            <div>
+              <span>一周目标</span>
+              <strong id="moduleGoal"></strong>
+            </div>
+          </div>
+          <div class="deep-grid">
+            <section>
+              <h4>核心概念</h4>
+              <ul id="moduleConcepts"></ul>
+            </section>
+            <section>
+              <h4>入门读法</h4>
+              <ol id="moduleSteps"></ol>
+            </section>
+            <section>
+              <h4>常见误区</h4>
+              <ul id="modulePitfalls"></ul>
+            </section>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="library" class="section alt">
+      <div class="section-head">
+        <p class="eyebrow">知识库</p>
+        <h2>术语速查与案例学习</h2>
+        <p>把常见名词、象意和读盘流程放在一起。学习时先查术语，再做案例，最后写复盘。</p>
+      </div>
+      <div class="library-layout">
+        <div class="term-panel">
+          <div class="field-row">
+            <label for="termSearch">术语搜索</label>
+            <input id="termSearch" type="search" placeholder="输入：日主、变爻、命宫、开门、明堂...">
+          </div>
+          <div class="term-list" id="termList" aria-live="polite"></div>
+        </div>
+        <article class="case-panel">
+          <div class="lesson-title-row">
+            <div>
+              <p class="eyebrow" id="caseCategory">案例</p>
+              <h3 id="caseTitle">如何提出一个好问题</h3>
+            </div>
+            <button class="icon-button" id="nextCase" type="button" title="下一个案例" aria-label="切换案例">↻</button>
+          </div>
+          <p id="caseIntro"></p>
+          <div class="case-steps" id="caseSteps"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="week" class="section alt">
+      <div class="section-head">
+        <p class="eyebrow">七天路线</p>
+        <h2>每天一个主题，一次练习</h2>
+        <p>一周不追求“断事如神”，而是建立概念、流程、象意和记录习惯。</p>
+      </div>
+      <div class="week-layout">
+        <div class="day-tabs" id="dayTabs" role="tablist" aria-label="七天学习计划"></div>
+        <article class="lesson-card">
+          <div class="lesson-title-row">
+            <div>
+              <p class="eyebrow" id="lessonDay">Day 1</p>
+              <h3 id="lessonTitle"></h3>
+            </div>
+            <button class="icon-button" id="completeLesson" type="button" title="标记完成" aria-label="标记今天课程完成">✓</button>
+          </div>
+          <p id="lessonSummary"></p>
+          <div class="lesson-columns">
+            <div>
+              <h4>今天要会</h4>
+              <ul id="lessonKnow"></ul>
+            </div>
+            <div>
+              <h4>动手练习</h4>
+              <ul id="lessonPractice"></ul>
+            </div>
+          </div>
+          <div class="lesson-columns">
+            <div>
+              <h4>阅读材料</h4>
+              <ul id="lessonReading"></ul>
+            </div>
+            <div>
+              <h4>自测问题</h4>
+              <ul id="lessonCheck"></ul>
+            </div>
+          </div>
+          <div class="reflection-box">
+            <label for="lessonReflection">今日一句笔记</label>
+            <textarea id="lessonReflection" rows="3" placeholder="例如：五行不是五种物质，更像五种关系和运动状态。"></textarea>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="practice" class="section">
+      <div class="section-head">
+        <p class="eyebrow">练习台</p>
+        <h2>日常占卜与入门推演</h2>
+        <p>选择一个问题，保留结果和你的解释。命理最有价值的部分，常常来自复盘。</p>
+      </div>
+
+      <div class="practice-tabs" role="tablist" aria-label="练习类型">
+        <button class="tab active" data-practice="iching" type="button">六十四卦</button>
+        <button class="tab" data-practice="bazi" type="button">四柱八字</button>
+        <button class="tab" data-practice="ziwei" type="button">紫微斗数</button>
+        <button class="tab" data-practice="qimen" type="button">奇门遁甲</button>
+        <button class="tab" data-practice="forms" type="button">手相面相</button>
+        <button class="tab" data-practice="fengshui" type="button">风水</button>
+      </div>
+
+      <div class="practice-panel active" id="ichingPanel">
+        <div class="panel-copy">
+          <h3>三枚硬币起卦</h3>
+          <p>输入一个具体问题，点击起卦。系统会模拟六次掷币，从下往上成卦，并给出学习版象意。</p>
+          <div class="field-row">
+            <label for="questionInput">问题</label>
+            <input id="questionInput" type="text" placeholder="今天是否适合推进某个计划？">
+            <button class="button primary" id="castHexagram" type="button">起卦</button>
+          </div>
+          <div class="result-box" id="hexagramResult"></div>
+        </div>
+        <canvas id="hexagramCanvas" width="520" height="420"></canvas>
+      </div>
+
+      <div class="practice-panel" id="baziPanel">
+        <div class="panel-copy">
+          <h3>四柱八字入门排盘</h3>
+          <p>选择出生时间，先观察年柱、日柱和五行分布。这里是教学近似算法，正式排盘需用节气和真太阳时校正。</p>
+          <div class="form-grid">
+            <label>出生日期<input id="birthDate" type="date" value="1996-08-18"></label>
+            <label>出生时辰<input id="birthHour" type="number" min="0" max="23" value="9"></label>
+            <label>性别<select id="birthGender"><option>不区分</option><option>男</option><option>女</option></select></label>
+            <button class="button primary" id="calcBazi" type="button">生成教学盘</button>
+          </div>
+          <div class="result-box" id="baziResult"></div>
+        </div>
+        <canvas id="baziCanvas" width="560" height="420"></canvas>
+      </div>
+
+      <div class="practice-panel" id="ziweiPanel">
+        <div class="panel-copy">
+          <h3>紫微斗数十二宫</h3>
+          <p>先不要急着排复杂星曜。拖动焦点，理解十二宫代表的人生场景，再学习主星落宫。</p>
+          <label class="range-label" for="palaceRange">宫位焦点 <span id="palaceName">命宫</span></label>
+          <input id="palaceRange" type="range" min="0" max="11" value="0">
+          <div class="result-box" id="ziweiResult"></div>
+        </div>
+        <canvas id="ziweiCanvas" width="560" height="420"></canvas>
+      </div>
+
+      <div class="practice-panel" id="qimenPanel">
+        <div class="panel-copy">
+          <h3>奇门遁甲九宫观察</h3>
+          <p>奇门适合训练“时空局势”的视角。选择一个日常场景，看九宫中的方向、行动和风险提示。</p>
+          <div class="field-row compact">
+            <label for="qimenScenario">场景</label>
+            <select id="qimenScenario">
+              <option value="meeting">沟通会议</option>
+              <option value="travel">短途出行</option>
+              <option value="study">学习备考</option>
+              <option value="project">项目推进</option>
+            </select>
+            <button class="button primary" id="shuffleQimen" type="button">换一局</button>
+          </div>
+          <div class="result-box" id="qimenResult"></div>
+        </div>
+        <canvas id="qimenCanvas" width="560" height="420"></canvas>
+      </div>
+
+      <div class="practice-panel" id="formsPanel">
+        <div class="panel-copy">
+          <h3>手相面相的观察训练</h3>
+          <p>把它当作“观察语言”学习：纹路、气色、神态和习惯互相参照，不做单点断言。</p>
+          <div class="choice-grid" id="formsChoices"></div>
+          <div class="result-box" id="formsResult"></div>
+        </div>
+        <canvas id="formsCanvas" width="560" height="420"></canvas>
+      </div>
+
+      <div class="practice-panel" id="fengshuiPanel">
+        <div class="panel-copy">
+          <h3>风水中的动线与方位</h3>
+          <p>用一个房间草图练习：门、窗、桌、床与动线如何影响安定感和专注度。</p>
+          <label class="range-label" for="compassRange">罗盘角度 <span id="compassDegree">0°</span></label>
+          <input id="compassRange" type="range" min="0" max="359" value="0">
+          <div class="result-box" id="fengshuiResult"></div>
+        </div>
+        <canvas id="fengshuiCanvas" width="560" height="420"></canvas>
+      </div>
+    </section>
+
+    <section id="notes" class="section alt">
+      <div class="section-head">
+        <p class="eyebrow">复盘</p>
+        <h2>你的学习笔记</h2>
+        <p>记录问题、结果、当下理解和后续验证。学习占卜时，复盘比一次结果更重要。</p>
+      </div>
+      <div class="notes-layout">
+        <form class="note-form" id="noteForm">
+          <label>主题
+            <select id="noteTopic">
+              <option>六十四卦</option>
+              <option>四柱八字</option>
+              <option>紫微斗数</option>
+              <option>奇门遁甲</option>
+              <option>手相面相</option>
+              <option>风水</option>
+            </select>
+          </label>
+          <label>问题或观察
+            <input id="noteQuestion" type="text" placeholder="我今天想观察什么？">
+          </label>
+          <label>解释与复盘
+            <textarea id="noteBody" rows="5" placeholder="记录象意、你的判断、后续实际发生了什么。"></textarea>
+          </label>
+          <button class="button primary" type="submit">保存笔记</button>
+        </form>
+        <div class="note-list" id="noteList" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>学习提醒：本教程用于传统文化学习和自我反思，不替代医学、法律、投资等专业判断。</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
