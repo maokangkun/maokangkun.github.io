@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>一周旅行日语交互教程</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">7-Day Travel Japanese</p>
+        <h1>一周旅行日语</h1>
+      </div>
+      <div class="progress-wrap" aria-label="学习进度">
+        <span id="progressText">0%</span>
+        <div class="progress-track"><div id="progressBar"></div></div>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="stage">
+        <div class="scene-panel">
+          <canvas id="sceneCanvas" width="920" height="380" aria-label="旅行场景手绘图"></canvas>
+          <div class="scene-copy">
+            <p id="sceneKicker">Day 1</p>
+            <h2 id="dayTitle">机场与问候</h2>
+            <p id="dayGoal">先学会打招呼、感谢、求助，以及入境时最常用的句子。</p>
+          </div>
+        </div>
+
+        <div class="day-tabs" id="dayTabs" aria-label="一周课程切换"></div>
+      </section>
+
+      <section class="workbench">
+        <aside class="daily-card">
+          <div class="section-heading">
+            <span>今日目标</span>
+            <button id="resetBtn" class="icon-btn" title="重置进度" aria-label="重置进度">↺</button>
+          </div>
+          <ol id="taskList" class="task-list"></ol>
+        </aside>
+
+        <section class="lesson-card">
+          <div class="section-heading">
+            <span>核心短句</span>
+            <div class="mode-switch" role="group" aria-label="显示模式">
+              <button class="mode active" data-mode="all">全部</button>
+              <button class="mode" data-mode="kana">假名</button>
+              <button class="mode" data-mode="romaji">罗马音</button>
+            </div>
+          </div>
+          <div id="phraseGrid" class="phrase-grid"></div>
+        </section>
+      </section>
+
+      <section class="practice-grid">
+        <div class="practice-panel">
+          <div class="section-heading">
+            <span>假名速记</span>
+            <button id="kanaShuffle" class="small-btn">换一组</button>
+          </div>
+          <div id="kanaDeck" class="kana-deck"></div>
+        </div>
+
+        <div class="practice-panel">
+          <div class="section-heading">
+            <span>场景对话</span>
+            <button id="dialogNext" class="small-btn">下一题</button>
+          </div>
+          <p id="dialogPrompt" class="dialog-prompt"></p>
+          <div id="dialogChoices" class="choice-list"></div>
+          <p id="dialogFeedback" class="feedback" aria-live="polite"></p>
+        </div>
+
+        <div class="practice-panel">
+          <div class="section-heading">
+            <span>快速测验</span>
+            <button id="quizNext" class="small-btn">下一题</button>
+          </div>
+          <p id="quizQuestion" class="dialog-prompt"></p>
+          <div id="quizChoices" class="choice-list"></div>
+          <p id="quizFeedback" class="feedback" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

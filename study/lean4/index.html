@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lean 4 与 AI 数学解题一周互动教程</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="回到首页">
+        <span class="brand-mark">L4</span>
+        <span>
+          <strong>Lean 4 Lab</strong>
+          <small>AI 数学证明入门</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="主要章节">
+        <a href="#plan">一周路线</a>
+        <a href="#playground">Lean 练习</a>
+        <a href="#proof">证明思维</a>
+        <a href="#research">科研路径</a>
+      </nav>
+      <button id="resetProgress" class="ghost-btn" type="button" title="清空本地进度">重置</button>
+    </header>
+
+    <main>
+      <section id="overview" class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">面向有计算机背景、Lean 4 零基础、非数学专业的学习者</p>
+          <h1>用一周时间建立 Lean 4 证明能力，并进入 AI 解数学难题的科研语境。</h1>
+          <p class="lead">
+            这份教程把 Lean 4 当作一门“可执行的证明语言”来学：先理解类型、命题与 tactic，
+            再练习把自然语言题目拆成形式化目标，最后连接到数据集、检索、自动证明与大模型协作。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#plan">开始学习</a>
+            <a class="secondary-btn" href="#playground">直接练 Lean</a>
+          </div>
+        </div>
+        <aside class="status-panel" aria-label="学习状态">
+          <div>
+            <span class="metric" id="doneCount">0</span>
+            <span class="metric-label">已完成任务</span>
+          </div>
+          <div>
+            <span class="metric" id="quizScore">0%</span>
+            <span class="metric-label">测验正确率</span>
+          </div>
+          <div class="progress-shell" aria-label="总体进度">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section band" id="plan">
+        <div class="section-head">
+          <p class="eyebrow">7 days, compact but real</p>
+          <h2>一周学习路线</h2>
+          <p>每天 2 到 4 小时。目标不是成为数学专家，而是能读懂 Lean 证明、改写简单证明，并理解 AI 形式化证明论文在做什么。</p>
+        </div>
+        <div class="day-layout">
+          <div class="day-tabs" id="dayTabs" role="tablist" aria-label="选择学习日"></div>
+          <article class="day-card" id="dayDetail" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="section grid-two">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">mental model</p>
+            <h2>Lean 4 先看这张图</h2>
+            <p>把 Lean 想成四层：表达对象、表达命题、构造证明、自动化搜索。点击节点会显示你该先学什么。</p>
+          </div>
+          <div class="map-wrap">
+            <canvas id="conceptMap" width="760" height="520" aria-label="Lean 概念关系图"></canvas>
+          </div>
+        </div>
+        <aside class="inspector" id="mapInspector">
+          <span class="tag">当前节点</span>
+          <h3>类型 Type</h3>
+          <p>Lean 中所有东西都有类型。自然数是 `Nat`，命题也是类型，证明就是对应命题类型的一个值。</p>
+          <code>def n : Nat := 3</code>
+        </aside>
+      </section>
+
+      <section class="section band" id="playground">
+        <div class="section-head">
+          <p class="eyebrow">interactive sandbox</p>
+          <h2>Lean 4 代码模拟练习</h2>
+          <p>这里不是完整 Lean 编译器，而是专门为入门设计的“语义模拟器”。它会识别常见写法，解释发生了什么，并指出下一步该查什么。</p>
+        </div>
+        <div class="playground">
+          <div class="editor-panel">
+            <div class="editor-toolbar">
+              <label for="exampleSelect">示例</label>
+              <select id="exampleSelect"></select>
+              <button id="runLean" class="primary-btn small" type="button">运行分析</button>
+            </div>
+            <textarea id="leanEditor" spellcheck="false" aria-label="Lean 代码编辑器"></textarea>
+          </div>
+          <div class="output-panel">
+            <h3>解释与目标状态</h3>
+            <pre id="leanOutput"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section grid-two" id="proof">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">proof game</p>
+            <h2>证明战术拼图</h2>
+            <p>把 tactic 拖到证明脚本里不如先理解它们在目标上做了什么。选择合适 tactic，看看目标如何变化。</p>
+          </div>
+          <div class="proof-game">
+            <div class="goal-box">
+              <span class="tag">当前目标</span>
+              <pre id="goalState"></pre>
+            </div>
+            <div class="tactic-grid" id="tacticGrid"></div>
+            <div class="feedback" id="tacticFeedback" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="flashcard">
+          <div class="flash-head">
+            <span class="tag">flashcards</span>
+            <button id="nextCard" class="ghost-btn" type="button">下一张</button>
+          </div>
+          <h3 id="cardTitle"></h3>
+          <p id="cardBody"></p>
+          <code id="cardCode"></code>
+        </div>
+      </section>
+
+      <section class="section band">
+        <div class="section-head">
+          <p class="eyebrow">checkpoint</p>
+          <h2>5 分钟自测</h2>
+          <p>这些题覆盖 Lean 的核心误区：命题即类型、证明即程序、目标驱动开发，以及 AI 系统为什么需要形式化验证。</p>
+        </div>
+        <div class="quiz" id="quiz"></div>
+      </section>
+
+      <section class="section" id="research">
+        <div class="section-head">
+          <p class="eyebrow">research bridge</p>
+          <h2>从 Lean 入门到 AI 解数学难题</h2>
+          <p>一周后你不需要会很多高等数学，但应该能进入“形式化证明 + 机器学习”的工作流。</p>
+        </div>
+        <div class="research-grid">
+          <article class="research-item">
+            <h3>1. 形式化题目</h3>
+            <p>把自然语言题目拆成对象、假设、目标。Lean 的价值是让“题目是否表达正确”变成可检查对象。</p>
+            <pre>theorem target (a b : Nat) (h : a = b) : b = a := by
+  exact h.symm</pre>
+          </article>
+          <article class="research-item">
+            <h3>2. 构造证明搜索空间</h3>
+            <p>AI 不是直接“想出证明”，而是生成 tactic、调用检索、检查状态，再循环修正。</p>
+            <pre>state -> retrieve -> propose tactic -> check -> new state</pre>
+          </article>
+          <article class="research-item">
+            <h3>3. 使用 Mathlib</h3>
+            <p>Mathlib 是 Lean 数学库。科研中大量能力来自找定理、改写定理、组合已有 lemma。</p>
+            <pre>#check Nat.add_comm
+#check mul_assoc
+#check Set.Subset.antisymm</pre>
+          </article>
+          <article class="research-item">
+            <h3>4. 建立实验指标</h3>
+            <p>不要只看生成文本质量。看可编译率、证明完成率、搜索步数、定理检索命中率与错误类型分布。</p>
+            <pre>pass@k, compile rate, tactic accuracy, proof length</pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section band">
+        <div class="section-head">
+          <p class="eyebrow">daily checklist</p>
+          <h2>每天完成这些动作</h2>
+          <p>勾选会保存在浏览器本地。它会提醒你把学习从“看懂”推进到“能写”。</p>
+        </div>
+        <div class="checklist" id="checklist"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>建议搭配官方 Lean 4、Theorem Proving in Lean 4、Mathematics in Lean 和 Mathlib 文档继续深入。</p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
