@@ -5,4 +5,4 @@ window.JAPANESE_TUTOR_AI_PROXY_URL = "";
 
 // Local-only fallback. Never commit a real OpenRouter key to a public repository or GitHub Pages source.
 window.JAPANESE_TUTOR_OPENROUTER_KEY = "";
-window.JAPANESE_TUTOR_OPENROUTER_MODEL = "deepseek/deepseek-chat-v3-0324:free";
+window.JAPANESE_TUTOR_OPENROUTER_MODEL = "openrouter/free";

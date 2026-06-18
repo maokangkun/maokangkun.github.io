@@ -214,17 +214,34 @@ const grammarPanel = $("#grammarPanel");
 const aiStatus = $("#aiStatus");
 const aiResult = $("#aiResult");
 const modelSelect = $("#openrouterModel");
-const defaultModel = "deepseek/deepseek-chat-v3-0324:free";
+const defaultModel = "openrouter/free";
+const preferredFreeModels = [
+  "openrouter/free",
+  "deepseek/deepseek-chat-v3-0324:free",
+  "qwen/qwen3-235b-a22b:free",
+  "qwen/qwen3-30b-a3b:free",
+  "google/gemini-2.0-flash-exp:free"
+];
 let speechVoices = [];
 
+function normalizeOpenRouterKey(value) {
+  const match = String(value || "").match(/sk-or-v1-[A-Za-z0-9_-]+/);
+  return match ? match[0] : "";
+}
+
+function isReasoningHeavyModel(id) {
+  return /(^|\/)(r1|nex-n2|reasoning)|thinking/i.test(id || "");
+}
+
 function getAiSettings() {
-  const proxyUrl = window.JAPANESE_TUTOR_AI_PROXY_URL || "";
   const privateKey = window.JAPANESE_TUTOR_OPENROUTER_KEY || "";
   const privateModel = window.JAPANESE_TUTOR_OPENROUTER_MODEL || "";
+  const keyInput = $("#openrouterKey")?.value.trim() || "";
+  const modelInput = modelSelect?.value.trim() || "";
+  const key = normalizeOpenRouterKey(keyInput || localStorage.getItem("openrouterKey") || privateKey);
   return {
-    proxyUrl: localStorage.getItem("aiProxyUrl") || proxyUrl,
-    key: localStorage.getItem("openrouterKey") || privateKey,
-    model: localStorage.getItem("openrouterModel") || privateModel || defaultModel
+    key,
+    model: modelInput || localStorage.getItem("openrouterModel") || privateModel || defaultModel
   };
 }
 
@@ -240,16 +257,13 @@ function setSpeechStatus(text) {
 function restoreAiSettings() {
   const settings = getAiSettings();
   const hasPrivateKey = Boolean(window.JAPANESE_TUTOR_OPENROUTER_KEY);
-  const hasProxy = Boolean(settings.proxyUrl);
-  $("#aiProxyUrl").value = localStorage.getItem("aiProxyUrl") || window.JAPANESE_TUTOR_AI_PROXY_URL || "";
   $("#openrouterKey").value = localStorage.getItem("openrouterKey") || "";
   $("#openrouterKey").placeholder = hasPrivateKey ? "已从私有配置读取默认 Key" : "sk-or-v1-...";
   if (![...modelSelect.options].some((option) => option.value === settings.model)) {
     modelSelect.add(new Option(settings.model, settings.model));
   }
   modelSelect.value = settings.model;
-  if (hasProxy) setAiStatus("已配置 AI 代理");
-  else setAiStatus(settings.key ? (hasPrivateKey ? "已读取私有 Key" : "已保存 Key") : "未连接");
+  setAiStatus(settings.key ? (hasPrivateKey ? "已读取私有 Key" : "已保存 Key") : "未连接");
 }
 
 function saveProgress() {
@@ -297,6 +311,37 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function createOpenRouterHeaders(settings) {
+  if (!settings.key) throw new Error("请先填写 OpenRouter API Key。");
+  if (!/^sk-or-v1-[A-Za-z0-9_-]+$/.test(settings.key)) {
+    throw new Error("OpenRouter Key 格式不正确。请只粘贴 sk-or-v1- 开头的完整 Key，不要带中文说明、空格或换行。");
+  }
+
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${settings.key}`
+  };
+}
+
+function getOpenRouterRequestBody(messages, options = {}) {
+  return {
+    model: getAiSettings().model,
+    messages,
+    temperature: options.temperature ?? 0.95,
+    max_tokens: options.maxTokens ?? 2600,
+    response_format: { type: "json_object" }
+  };
+}
+
+function extractStreamDelta(payload) {
+  const delta = payload.choices?.[0]?.delta || {};
+  const message = payload.choices?.[0]?.message || {};
+  return {
+    content: delta.content || message.content || "",
+    reasoning: delta.reasoning || message.reasoning || ""
+  };
 }
 
 function phraseId(dayIndex, phraseIndex) {
@@ -539,60 +584,165 @@ function renderAiLesson(data) {
 
 async function callOpenRouter(messages, options = {}) {
   const settings = getAiSettings();
-  if (!settings.proxyUrl && !settings.key) throw new Error("请先配置 AI 代理地址，或填写本机 OpenRouter API Key。");
+  const endpoint = "https://openrouter.ai/api/v1/chat/completions";
+  const headers = createOpenRouterHeaders(settings);
 
-  const endpoint = settings.proxyUrl || "https://openrouter.ai/api/v1/chat/completions";
-  const headers = {
-    "Content-Type": "application/json"
-  };
-  if (!settings.proxyUrl) {
-    headers.Authorization = `Bearer ${settings.key}`;
-    headers["HTTP-Referer"] = window.location.href;
-    headers["X-OpenRouter-Title"] = "一周旅行日语交互教程";
+  let response;
+  try {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(getOpenRouterRequestBody(messages, options))
+    });
+  } catch (error) {
+    throw new Error(`OpenRouter 无法连接。可能是网络、CORS、内网代理或浏览器拦截导致。原始错误：${error.message}`);
   }
-
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      model: settings.model,
-      messages,
-      temperature: options.temperature ?? 0.95,
-      max_tokens: options.maxTokens ?? 1400,
-      response_format: { type: "json_object" }
-    })
-  });
 
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(`OpenRouter 请求失败：${response.status} ${detail.slice(0, 160)}`);
   }
 
-  const payload = await response.json();
-  return payload.choices?.[0]?.message?.content || "";
+  const text = await response.text();
+  if (text.trim().startsWith("<")) {
+    throw new Error("OpenRouter 返回了 HTML 页面，而不是 JSON。请检查网络代理、内网网关或浏览器是否打开了错误页。");
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    throw new Error(`AI 接口返回的内容不是 JSON：${text.slice(0, 220)}`);
+  }
+  const choice = payload.choices?.[0];
+  const content = choice?.message?.content;
+  if (typeof content === "string" && content.trim()) return content;
+
+  const model = payload.model || settings.model;
+  const reason = choice?.finish_reason || choice?.native_finish_reason || "unknown";
+  if (choice?.message?.reasoning || reason === "length") {
+    throw new Error(`模型 ${model} 只返回了推理内容，没有生成可解析的 JSON（finish_reason: ${reason}）。请在“免费模型”里换成 deepseek/deepseek-chat-v3-0324:free、Qwen 或 Gemini 这类普通聊天模型后重试。`);
+  }
+  throw new Error(`模型 ${model} 没有返回 message.content，请更换免费模型后重试。`);
+}
+
+async function callOpenRouterStream(messages, options = {}, onDelta = () => {}) {
+  const settings = getAiSettings();
+  const endpoint = "https://openrouter.ai/api/v1/chat/completions";
+  const headers = createOpenRouterHeaders(settings);
+
+  let response;
+  try {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        ...getOpenRouterRequestBody(messages, options),
+        stream: true
+      })
+    });
+  } catch (error) {
+    throw new Error(`OpenRouter 流式连接失败。可能是网络、CORS、内网代理或浏览器拦截导致。原始错误：${error.message}`);
+  }
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`OpenRouter 流式请求失败：${response.status} ${detail.slice(0, 160)}`);
+  }
+
+  if (!response.body) {
+    throw new Error("当前浏览器不支持流式读取 response.body。");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+  let buffer = "";
+  let content = "";
+  let reasoningChars = 0;
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    const events = buffer.split(/\r?\n\r?\n/);
+    buffer = events.pop() || "";
+
+    for (const event of events) {
+      const lines = event.split("\n").filter((line) => line.startsWith("data:"));
+      for (const line of lines) {
+        const data = line.slice(5).trim();
+        if (!data || data === "[DONE]") continue;
+
+        let payload;
+        try {
+          payload = JSON.parse(data);
+        } catch {
+          continue;
+        }
+
+        const delta = extractStreamDelta(payload);
+        if (delta.reasoning) reasoningChars += delta.reasoning.length;
+        if (!delta.content) continue;
+
+        content += delta.content;
+        onDelta(delta.content, content);
+      }
+    }
+  }
+
+  if (!content.trim() && reasoningChars > 0) {
+    throw new Error(`模型 ${settings.model} 只输出了推理流，没有输出 JSON 内容。请换成 deepseek/deepseek-chat-v3-0324:free、Qwen 或 Gemini 这类普通聊天模型。`);
+  }
+
+  if (!content.trim()) {
+    throw new Error(`模型 ${settings.model} 没有返回流式内容，请更换模型后重试。`);
+  }
+
+  return content;
 }
 
 async function loadFreeModels() {
   setAiStatus("正在加载模型...");
   const response = await fetch("https://openrouter.ai/api/v1/models");
   if (!response.ok) throw new Error("免费模型列表加载失败。");
-  const payload = await response.json();
+  const text = await response.text();
+  if (text.trim().startsWith("<")) {
+    throw new Error("模型列表接口返回了 HTML 页面。请检查网络代理、内网网关或 OpenRouter 是否被拦截。");
+  }
+  const payload = JSON.parse(text);
   const freeModels = (payload.data || [])
     .filter((model) => {
       const prompt = Number(model.pricing?.prompt || 0);
       const completion = Number(model.pricing?.completion || 0);
       return model.id?.includes(":free") || (prompt === 0 && completion === 0);
     })
-    .sort((a, b) => a.id.localeCompare(b.id));
+    .sort((a, b) => {
+      const aPreferred = preferredFreeModels.indexOf(a.id);
+      const bPreferred = preferredFreeModels.indexOf(b.id);
+      if (aPreferred !== -1 || bPreferred !== -1) {
+        if (aPreferred === -1) return 1;
+        if (bPreferred === -1) return -1;
+        return aPreferred - bPreferred;
+      }
+      if (isReasoningHeavyModel(a.id) !== isReasoningHeavyModel(b.id)) {
+        return isReasoningHeavyModel(a.id) ? 1 : -1;
+      }
+      return a.id.localeCompare(b.id);
+    });
 
   if (!freeModels.length) throw new Error("没有找到免费模型，请手动输入 :free 模型名。");
-  modelSelect.innerHTML = freeModels
+  const modelOptions = freeModels.some((model) => model.id === defaultModel)
+    ? freeModels
+    : [{ id: defaultModel }, ...freeModels];
+  modelSelect.innerHTML = modelOptions
     .map((model) => `<option value="${escapeHtml(model.id)}">${escapeHtml(model.id)}</option>`)
     .join("");
   const saved = localStorage.getItem("openrouterModel");
-  modelSelect.value = saved && freeModels.some((model) => model.id === saved) ? saved : freeModels[0].id;
+  const shouldKeepSaved = saved && modelOptions.some((model) => model.id === saved) && !isReasoningHeavyModel(saved);
+  modelSelect.value = shouldKeepSaved ? saved : defaultModel;
   localStorage.setItem("openrouterModel", modelSelect.value);
-  setAiStatus(`已加载 ${freeModels.length} 个免费模型`);
+  setAiStatus(`已自动加载 ${modelOptions.length} 个免费模型`);
 }
 
 async function generateAiLesson() {
@@ -600,13 +750,18 @@ async function generateAiLesson() {
   const scenario = $("#aiScenario").value;
   const level = $("#aiLevel").value;
   const settings = getAiSettings();
-  if (!settings.proxyUrl && !settings.key) {
+  if (!settings.key) {
     renderAiLesson(buildLocalLesson());
     setAiStatus("本地随机生成完成");
     return;
   }
-  setAiStatus("AI 生成中...");
-  aiResult.innerHTML = `<p class="empty-state">正在生成 ${escapeHtml(scenario)} 的随机练习...</p>`;
+  setAiStatus("AI 流式生成中...");
+  aiResult.innerHTML = `
+    <div class="stream-box">
+      <strong>正在流式生成 ${escapeHtml(scenario)} 的随机练习...</strong>
+      <pre id="streamOutput" class="stream-output"></pre>
+    </div>
+  `;
 
   const prompt = `
 请为中文母语、零基础到入门水平的日本旅行者生成一组新的日语学习内容。
@@ -617,7 +772,7 @@ async function generateAiLesson() {
 要求：
 1. 内容必须和已有固定短句不同，尽量多元化、贴近日常旅行。
 2. 日语要自然、礼貌、短小，适合游客直接说。
-3. 返回严格 JSON，不要 Markdown。
+3. 返回严格 JSON，不要 Markdown，不要解释，不要推理过程。
 4. JSON 结构必须是：
 {
   "title": "中文标题",
@@ -638,13 +793,36 @@ async function generateAiLesson() {
 数量：phrases 6 条，vocab 10 个，dialog 4 轮。
 `;
 
-  const content = await callOpenRouter([
-    { role: "system", content: "你是耐心、准确的日语旅行会话老师。只输出合法 JSON。" },
-    { role: "user", content: prompt }
-  ]);
+  const streamOutput = $("#streamOutput");
+  const content = await callOpenRouterStream(
+    [
+      { role: "system", content: "你是耐心、准确的日语旅行会话老师。只输出合法 JSON，不输出推理过程。" },
+      { role: "user", content: prompt }
+    ],
+    { maxTokens: 2600 },
+    (_, fullText) => {
+      if (!streamOutput) return;
+      streamOutput.textContent = fullText;
+      streamOutput.scrollTop = streamOutput.scrollHeight;
+    }
+  );
   const data = normalizeAiLesson(extractJson(content));
   renderAiLesson(data);
   setAiStatus("生成完成");
+}
+
+async function testAiConnection() {
+  setAiStatus("正在测试连接...");
+  aiResult.innerHTML = `<p class="empty-state">正在发送一条很短的测试请求...</p>`;
+  const content = await callOpenRouter(
+    [
+      { role: "system", content: "只输出 JSON。" },
+      { role: "user", content: "返回严格 JSON：{\"ok\":true,\"message\":\"连接成功\"}" }
+    ],
+    { temperature: 0.1, maxTokens: 80 }
+  );
+  aiResult.innerHTML = `<p class="empty-state">连接成功，模型已返回：${escapeHtml(content.slice(0, 260))}</p>`;
+  setAiStatus("连接成功");
 }
 
 function makeQuiz() {
@@ -873,26 +1051,23 @@ $("#quizChoices").addEventListener("click", (event) => {
 });
 
 $("#saveAiSettings").addEventListener("click", () => {
-  const proxyUrl = $("#aiProxyUrl").value.trim();
-  const key = $("#openrouterKey").value.trim();
+  const key = normalizeOpenRouterKey($("#openrouterKey").value);
   const model = modelSelect.value.trim() || defaultModel;
-  if (proxyUrl) localStorage.setItem("aiProxyUrl", proxyUrl);
-  else localStorage.removeItem("aiProxyUrl");
   if (key) localStorage.setItem("openrouterKey", key);
   else localStorage.removeItem("openrouterKey");
   localStorage.setItem("openrouterModel", model);
-  setAiStatus(proxyUrl ? "代理设置已保存" : key ? "本机 Key 已保存" : "已清除 AI 设置");
+  setAiStatus(key ? "OpenRouter Key 已保存" : "已清除 AI 设置");
 });
 
 modelSelect.addEventListener("change", () => {
   localStorage.setItem("openrouterModel", modelSelect.value);
 });
 
-$("#loadFreeModels").addEventListener("click", async () => {
+$("#testAiConnection").addEventListener("click", async () => {
   try {
-    await loadFreeModels();
+    await testAiConnection();
   } catch (error) {
-    setAiStatus("模型加载失败");
+    setAiStatus("连接失败");
     aiResult.innerHTML = `<p class="empty-state">${escapeHtml(error.message)}</p>`;
   }
 });
@@ -936,3 +1111,7 @@ renderLesson();
 renderKana();
 makeDialog();
 makeQuiz();
+loadFreeModels().catch((error) => {
+  setAiStatus("模型自动加载失败，使用 openrouter/free");
+  console.warn(error);
+});

@@ -81,17 +81,13 @@
         </div>
         <div class="ai-controls">
           <label>
-            AI 代理地址
-            <input id="aiProxyUrl" type="url" placeholder="https://your-worker.workers.dev" autocomplete="off" />
-          </label>
-          <label>
-            OpenRouter Key（本机备用）
+            OpenRouter Key
             <input id="openrouterKey" type="password" placeholder="sk-or-v1-..." autocomplete="off" />
           </label>
           <label>
             免费模型
             <select id="openrouterModel">
-              <option value="deepseek/deepseek-chat-v3-0324:free">deepseek/deepseek-chat-v3-0324:free</option>
+              <option value="openrouter/free">openrouter/free</option>
             </select>
           </label>
           <label>
@@ -116,11 +112,11 @@
         </div>
         <div class="ai-actions">
           <button id="saveAiSettings" class="small-btn">保存设置</button>
-          <button id="loadFreeModels" class="small-btn">加载免费模型</button>
+          <button id="testAiConnection" class="small-btn">测试连接</button>
           <button id="generateAiLesson" class="primary-btn">生成随机内容</button>
         </div>
         <div id="aiResult" class="ai-result">
-          <p class="empty-state">配置 AI 代理后会调用真实大模型；没有代理或 Key 时，也会使用本地随机生成器生成新的短句、单词、语法和对话练习。</p>
+          <p class="empty-state">填写 OpenRouter Key 后会调用真实大模型；没有 Key 时，会使用本地随机生成器生成新的短句、单词、语法和对话练习。</p>
         </div>
       </section>
 
@@ -155,7 +151,6 @@
       </section>
     </main>
 
-    <script src="./config.local.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

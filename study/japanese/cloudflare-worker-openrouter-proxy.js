@@ -36,10 +36,10 @@ export default {
         Authorization: `Bearer ${env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
         "HTTP-Referer": env.APP_URL || request.headers.get("Origin") || "https://example.com",
-        "X-OpenRouter-Title": "一周旅行日语交互教程"
+        "X-OpenRouter-Title": "Travel Japanese Tutor"
       },
       body: JSON.stringify({
-        model: body.model || env.OPENROUTER_MODEL || "deepseek/deepseek-chat-v3-0324:free",
+        model: body.model || env.OPENROUTER_MODEL || "openrouter/free",
         messages,
         temperature: body.temperature ?? 0.95,
         max_tokens: body.max_tokens ?? 1400,
