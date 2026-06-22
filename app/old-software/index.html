@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>软件遗迹复活器</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23fffdf7'/%3E%3Cpath d='M10 10h44v44H10zM32 10v44M10 32h44' fill='none' stroke='%2323211d' stroke-width='5'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <h1>软件遗迹复活器</h1>
+            <p id="stackSummary">正在读取 stack</p>
+          </div>
+        </div>
+        <div class="toolbar" aria-label="项目工具">
+          <select id="samplePicker" class="sample-picker" title="选择示例软件">
+            <option value="hypercard">HyperCard 样本</option>
+            <option value="dos">DOS 交互软件</option>
+          </select>
+          <label class="icon-button file-button" title="导入 JSON stack">
+            <input id="importFile" type="file" accept="application/json,.json" />
+            <span aria-hidden="true">↥</span>
+          </label>
+          <button id="resetStack" class="icon-button" type="button" title="重置示例 stack">↺</button>
+          <button id="exportReport" class="command-button" type="button">导出报告</button>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="复活器工作区">
+        <aside class="panel map-panel" aria-label="卡片地图">
+          <div class="panel-head">
+            <h2>Cards</h2>
+            <span id="cardCount" class="count-pill">0</span>
+          </div>
+          <div id="cardList" class="card-list"></div>
+        </aside>
+
+        <section class="stage-wrap" aria-label="运行时">
+          <div class="stage-header">
+            <div>
+              <span class="eyebrow">Runtime</span>
+              <h2 id="currentCardTitle">card</h2>
+            </div>
+            <div class="nav-controls">
+              <button id="backButton" class="icon-button" type="button" title="Go back">←</button>
+              <button id="prevButton" class="icon-button" type="button" title="Previous card">‹</button>
+              <button id="nextButton" class="icon-button" type="button" title="Next card">›</button>
+            </div>
+          </div>
+          <div id="stage" class="stage" role="application" aria-label="复活后的旧软件"></div>
+          <div class="log-strip">
+            <span>Log</span>
+            <div id="runtimeLog" class="runtime-log"></div>
+          </div>
+        </section>
+
+        <aside class="panel inspector-panel" aria-label="考古面板">
+          <div class="tabs" role="tablist" aria-label="考古视图">
+            <button class="tab is-active" type="button" data-tab="report">报告</button>
+            <button class="tab" type="button" data-tab="script">脚本</button>
+            <button class="tab" type="button" data-tab="ir">IR</button>
+          </div>
+          <div id="reportPane" class="tab-pane is-active"></div>
+          <div id="scriptPane" class="tab-pane"></div>
+          <pre id="irPane" class="tab-pane code-pane"></pre>
+        </aside>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - heading "软件遗迹复活器" [level=1] [ref=e7]
+      - paragraph [ref=e8]: HyperGarden Demo · 5 cards · 8 scripts
+    - generic "项目工具" [ref=e9]:
+      - generic "导入 JSON stack" [ref=e10] [cursor=pointer]:
+        - button [ref=e11]
+        - generic [ref=e12]: ↥
+      - button "↺" [ref=e13] [cursor=pointer]
+      - button "导出报告" [ref=e14] [cursor=pointer]
+  - region "复活器工作区" [ref=e15]:
+    - complementary "卡片地图" [ref=e16]:
+      - generic [ref=e17]:
+        - heading "Cards" [level=2] [ref=e18]
+        - generic [ref=e19]: "5"
+      - generic [ref=e20]:
+        - button "Home home" [ref=e21] [cursor=pointer]:
+          - generic [ref=e23]:
+            - strong [ref=e24]: Home
+            - generic [ref=e25]: home
+        - button "Intro intro" [ref=e26] [cursor=pointer]:
+          - generic [ref=e28]:
+            - strong [ref=e29]: Intro
+            - generic [ref=e30]: intro
+        - button "Map map" [ref=e31] [cursor=pointer]:
+          - generic [ref=e33]:
+            - strong [ref=e34]: Map
+            - generic [ref=e35]: map
+        - button "End end" [ref=e36] [cursor=pointer]:
+          - generic [ref=e38]:
+            - strong [ref=e39]: End
+            - generic [ref=e40]: end
+        - button "Secret secret" [ref=e41] [cursor=pointer]:
+          - generic [ref=e43]:
+            - strong [ref=e44]: Secret
+            - generic [ref=e45]: secret
+    - region "运行时" [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]: Runtime
+          - heading "Home / home" [level=2] [ref=e50]
+        - generic [ref=e51]:
+          - button "←" [ref=e52] [cursor=pointer]
+          - button "‹" [ref=e53] [cursor=pointer]
+          - button "›" [ref=e54] [cursor=pointer]
+      - application "复活后的旧软件" [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]: HyperGarden
+          - generic [ref=e58]: 一张被重新点亮的卡片。点击 Start 进入这个旧软件的主要循环。
+          - button "Start" [ref=e59] [cursor=pointer]
+          - button "Secret" [ref=e60] [cursor=pointer]
+      - generic [ref=e61]:
+        - generic [ref=e62]: Log
+        - generic [ref=e63]: stack loaded
+    - complementary "考古面板" [ref=e64]:
+      - tablist "考古视图" [ref=e65]:
+        - button "报告" [ref=e66] [cursor=pointer]
+        - button "脚本" [ref=e67] [cursor=pointer]
+        - button "IR" [ref=e68] [cursor=pointer]
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - strong [ref=e72]: "5"
+            - text: cards
+          - generic [ref=e73]:
+            - strong [ref=e74]: "8"
+            - text: buttons
+          - generic [ref=e75]:
+            - strong [ref=e76]: "11"
+            - text: fields
+          - generic [ref=e77]:
+            - strong [ref=e78]: "7"
+            - text: transitions
+        - heading "Findings" [level=3] [ref=e79]
+        - generic [ref=e80]:
+          - article [ref=e81]:
+            - generic [ref=e82]:
+              - strong [ref=e83]: 入口结构已识别
+              - paragraph [ref=e84]: 入口 card 是 "Home"，当前样本包含 5 张 card。
+          - article [ref=e85]:
+            - generic [ref=e86]:
+              - strong [ref=e87]: 交互路径已恢复
+              - paragraph [ref=e88]: 从按钮脚本中恢复了 7 条状态迁移。
+          - article [ref=e89]:
+            - generic [ref=e90]:
+              - strong [ref=e91]: 发现共享 background
+              - paragraph [ref=e92]: main-bg × 3
+          - article [ref=e93]:
+            - generic [ref=e94]:
+              - strong [ref=e95]: 发现默认隐藏元素
+              - paragraph [ref=e96]: Intro.clue
+        - heading "Transitions" [level=3] [ref=e97]
+        - generic [ref=e98]:
+          - article [ref=e99]:
+            - strong [ref=e100]: home → intro
+            - paragraph [ref=e101]: click(Start) · go to card "Intro"
+          - article [ref=e102]:
+            - strong [ref=e103]: home → secret
+            - paragraph [ref=e104]: click(Secret) · go to card "Secret"
+          - article [ref=e105]:
+            - strong [ref=e106]: intro → map
+            - paragraph [ref=e107]: click(Next) · go next
+          - article [ref=e108]:
+            - strong [ref=e109]: map → home
+            - paragraph [ref=e110]: click(Home) · go to card "Home"
+          - article [ref=e111]:
+            - strong [ref=e112]: map → end
+            - paragraph [ref=e113]: click(Next) · go next
+          - article [ref=e114]:
+            - strong [ref=e115]: end → home
+            - paragraph [ref=e116]: click(Again) · go to card "Home"
+          - article [ref=e117]:
+            - strong [ref=e118]: secret → (history)
+            - paragraph [ref=e119]: click(Back) · go back
