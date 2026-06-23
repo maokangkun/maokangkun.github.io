@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>方块溪谷 2D/3D 农场</title>
+    <meta
+      name="description"
+      content="一个静态网页 3D 像素风农场小游戏，包含耕地、播种、浇水、收获和昼夜循环。"
+    >
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23436b45'/%3E%3Crect x='12' y='34' width='40' height='18' fill='%238d6536'/%3E%3Crect x='22' y='18' width='20' height='26' fill='%23f4c65b'/%3E%3Crect x='27' y='8' width='10' height='12' fill='%2358a65c'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="viewport-wrap" aria-label="方块溪谷 2D/3D 农场">
+        <canvas id="gameCanvas3d"></canvas>
+        <canvas id="gameCanvas2d"></canvas>
+        <div class="hud top-left">
+          <strong>方块溪谷</strong>
+          <span id="dayText">第 1 天 06:00</span>
+        </div>
+        <div class="hud top-right">
+          <span>金币 <strong id="coinText">80</strong></span>
+          <span>体力 <strong id="energyText">100</strong></span>
+          <span>背包 <strong id="bagText">0</strong></span>
+        </div>
+        <div class="message-log" id="messageLog" aria-live="polite"></div>
+        <div class="mobile-pad" aria-label="移动控制">
+          <button type="button" data-move="up" title="向上">▲</button>
+          <button type="button" data-move="left" title="向左">◀</button>
+          <button type="button" data-move="down" title="向下">▼</button>
+          <button type="button" data-move="right" title="向右">▶</button>
+        </div>
+      </section>
+
+      <aside class="command-panel">
+        <div class="panel-head">
+          <h1>方块溪谷</h1>
+          <p>2D / 3D 像素风农场小品</p>
+        </div>
+
+        <section class="tool-section">
+          <h2>视角</h2>
+          <div class="view-switch" id="viewSwitch" aria-label="视角切换">
+            <button type="button" data-mode="2d" class="active">2D</button>
+            <button type="button" data-mode="3d">3D</button>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>工具</h2>
+          <div class="tool-grid" id="toolGrid">
+            <button type="button" data-tool="hoe" class="active" title="锄头">⛏</button>
+            <button type="button" data-tool="seed" title="种子">✦</button>
+            <button type="button" data-tool="water" title="水壶">⌁</button>
+            <button type="button" data-tool="pick" title="收获">✓</button>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>行动</h2>
+          <div class="action-grid">
+            <button id="useBtn" class="primary" type="button">使用工具</button>
+            <button id="sleepBtn" type="button">睡到清晨</button>
+          </div>
+        </section>
+
+        <section class="tool-section compact">
+          <h2>作物</h2>
+          <div class="stat-list">
+            <span>萝芽种子 <strong id="seedText">12</strong></span>
+            <span>每株售价 <strong>18</strong></span>
+            <span>成熟天数 <strong>3</strong></span>
+          </div>
+        </section>
+
+        <section class="tool-section compact">
+          <h2>控制</h2>
+          <div class="key-list">
+            <span>WASD / 方向键移动</span>
+            <span>空格 / Enter 使用工具</span>
+            <span>1-4 切换工具</span>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
