@@ -1,0 +1,150 @@
+:root {
+  color-scheme: dark;
+  --ink: #101418;
+  --paper: #f4eee1;
+  --gold: #d7b56d;
+  --cinnabar: #b84a3e;
+  --jade: #76a89c;
+  --night: #14202a;
+  --shadow: rgba(7, 10, 13, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+}
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 22% 14%, rgba(215, 181, 109, 0.2), transparent 25%),
+    linear-gradient(145deg, #10151a 0%, #17262d 48%, #251d1b 100%);
+}
+
+#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 70% 20%, transparent 0 28%, rgba(7, 10, 13, 0.34) 70%),
+    linear-gradient(90deg, rgba(5, 8, 10, 0.58), transparent 34%, transparent 66%, rgba(5, 8, 10, 0.48)),
+    linear-gradient(0deg, rgba(4, 5, 6, 0.76), transparent 36%, rgba(4, 5, 6, 0.16));
+}
+
+.poem-panel {
+  position: absolute;
+  left: clamp(20px, 5vw, 72px);
+  top: clamp(24px, 8vh, 84px);
+  z-index: 2;
+  width: min(640px, calc(100vw - 40px));
+  text-shadow: 0 2px 18px var(--shadow);
+}
+
+h1 {
+  margin: 0 0 30px;
+  color: #fff8e8;
+  font-size: clamp(42px, 8vw, 98px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.lyric-wrap {
+  width: min(600px, 100%);
+  padding-left: 18px;
+  border-left: 2px solid rgba(215, 181, 109, 0.68);
+}
+
+.lyric {
+  margin: 0;
+  transition: opacity 360ms ease, transform 360ms ease, filter 360ms ease;
+}
+
+.lyric.current {
+  min-height: 88px;
+  color: #fffaf0;
+  font-size: clamp(25px, 3.8vw, 42px);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.lyric.side {
+  min-height: 28px;
+  color: rgba(244, 238, 225, 0.58);
+  font-size: clamp(15px, 2vw, 20px);
+  line-height: 1.45;
+}
+
+.lyric.side:first-child {
+  margin-bottom: 12px;
+}
+
+.lyric.side:last-child {
+  margin-top: 14px;
+}
+
+.progress-shell {
+  position: absolute;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  z-index: 3;
+  width: min(720px, calc(100vw - 96px));
+  height: 4px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(244, 238, 225, 0.22);
+  box-shadow: 0 0 28px rgba(7, 10, 13, 0.34);
+  cursor: pointer;
+  transform: translateX(-50%);
+}
+
+.progress {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--jade), var(--gold), var(--cinnabar));
+}
+
+@media (max-width: 720px) {
+  .stage {
+    min-height: 620px;
+  }
+
+  .poem-panel {
+    top: 28px;
+  }
+
+  .progress-shell {
+    bottom: max(24px, env(safe-area-inset-bottom));
+    width: min(360px, calc(100vw - 104px));
+  }
+}

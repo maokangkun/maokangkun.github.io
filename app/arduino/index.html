@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arduino 仿真模拟器</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23007c89'/%3E%3Cpath d='M19 33h26M32 20v26' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23ef9b20'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23ef9b20'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <h1>Arduino 仿真模拟器</h1>
+            <p>上传、运行、调试 Arduino 草图，实时观察引脚、电路元件和串口输出。</p>
+          </div>
+          <div class="status-strip" aria-live="polite">
+            <span id="boardStatus">UNO R3</span>
+            <span id="runStatus">已停止</span>
+            <span id="clockStatus">0 ms</span>
+          </div>
+        </header>
+
+        <section class="lab-layout">
+          <aside class="panel toolbox" aria-label="仿真控制">
+            <div class="panel-title">
+              <h2>控制</h2>
+              <label class="file-button">
+                <input id="fileInput" type="file" accept=".ino,.cpp,.h,.txt">
+                上传代码
+              </label>
+            </div>
+            <div class="button-grid">
+              <button id="runBtn" class="primary" type="button">运行</button>
+              <button id="pauseBtn" type="button">暂停</button>
+              <button id="stepBtn" type="button">单步</button>
+              <button id="resetBtn" type="button">复位</button>
+            </div>
+
+            <div class="control-group">
+              <label for="speedRange">仿真速度 <strong id="speedLabel">1.0x</strong></label>
+              <input id="speedRange" type="range" min="0.2" max="8" value="1" step="0.2">
+            </div>
+
+            <div class="control-group">
+              <label for="loopLimit">循环保护</label>
+              <input id="loopLimit" type="number" min="1" max="5000" value="250">
+            </div>
+
+            <div class="help-box">
+              点击板子引脚，再点击模块端口即可连线。支持常用 Arduino API：pinMode、digitalWrite、analogWrite、analogRead、delay、millis、Serial、Servo。
+            </div>
+          </aside>
+
+          <section class="bench-panel" aria-label="Arduino 实验台">
+            <div class="bench-toolbar">
+              <div>
+                <h2>Arduino UNO R3 实验台</h2>
+                <p id="wireHint">选择一个板子引脚开始连线。</p>
+              </div>
+              <div class="bench-actions">
+                <button id="addLedBtn" type="button">添加 LED</button>
+                <button id="addSensorBtn" type="button">添加传感器</button>
+                <button id="clearWiresBtn" type="button">清除连线</button>
+              </div>
+            </div>
+
+            <div class="bench-canvas" id="benchCanvas">
+              <svg id="wireLayer" class="wire-layer" aria-hidden="true"></svg>
+              <div class="module-rail module-rail-left" id="leftModules"></div>
+
+              <div class="arduino-board" aria-label="Arduino UNO R3 板子示意图">
+                <div class="usb-port"></div>
+                <div class="power-jack"></div>
+                <div class="board-label">
+                  <strong>UNO</strong>
+                  <span>Arduino R3</span>
+                </div>
+                <div class="chip main-chip">ATmega328P</div>
+                <div class="chip usb-chip">USB</div>
+                <div class="reset-button">RST</div>
+                <div class="board-led led-rx"></div>
+                <div class="board-led led-tx"></div>
+                <div class="header header-digital" id="digitalHeader"></div>
+                <div class="header header-analog" id="analogHeader"></div>
+                <div class="header header-power" id="powerHeader"></div>
+              </div>
+
+              <div class="module-rail module-rail-right" id="rightModules"></div>
+            </div>
+          </section>
+
+          <aside class="panel inspector" aria-label="调试器">
+            <div class="panel-title">
+              <h2>调试</h2>
+              <button id="clearBreakpointsBtn" type="button">清除断点</button>
+            </div>
+            <div class="debug-grid">
+              <div>
+                <span>当前阶段</span>
+                <strong id="phaseValue">idle</strong>
+              </div>
+              <div>
+                <span>当前行</span>
+                <strong id="lineValue">-</strong>
+              </div>
+              <div>
+                <span>循环次数</span>
+                <strong id="loopValue">0</strong>
+              </div>
+              <div>
+                <span>断点</span>
+                <strong id="breakpointValue">0</strong>
+              </div>
+            </div>
+            <div class="breakpoint-editor">
+              <label for="breakpointInput">添加断点行</label>
+              <div>
+                <input id="breakpointInput" type="number" min="1" placeholder="例如 12">
+                <button id="addBreakpointBtn" type="button">添加</button>
+              </div>
+            </div>
+            <ul id="breakpointList" class="breakpoint-list"></ul>
+          </aside>
+        </section>
+      </section>
+
+      <section class="simulator-grid">
+        <section class="panel board-panel">
+          <div class="panel-title">
+            <h2>UNO R3 引脚</h2>
+            <div class="legend">
+              <span><i class="dot high"></i>HIGH</span>
+              <span><i class="dot pwm"></i>PWM</span>
+              <span><i class="dot input"></i>INPUT</span>
+            </div>
+          </div>
+          <div id="pinBoard" class="pin-board" aria-label="Arduino 引脚状态"></div>
+        </section>
+
+        <section class="panel circuit-panel">
+          <div class="panel-title">
+            <h2>模拟输入</h2>
+          </div>
+          <div class="analog-controls">
+            <div id="analogInputs"></div>
+          </div>
+        </section>
+
+        <section class="panel serial-panel">
+          <div class="panel-title">
+            <h2>串口监视器</h2>
+            <button id="clearSerialBtn" type="button">清空</button>
+          </div>
+          <pre id="serialOutput" aria-live="polite"></pre>
+          <div class="serial-input">
+            <input id="serialInput" type="text" placeholder="发送到 Serial">
+            <button id="sendSerialBtn" type="button">发送</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="code-station">
+        <section class="editor-pane">
+          <div class="panel-title editor-title">
+            <h2>代码编辑与上传</h2>
+            <div class="editor-actions">
+              <button id="exampleBtn" type="button">载入示例</button>
+              <button id="formatBtn" type="button">整理缩进</button>
+            </div>
+          </div>
+          <div class="editor-wrap">
+            <div id="lineNumbers" class="line-numbers" aria-hidden="true"></div>
+            <textarea id="codeEditor" spellcheck="false" aria-label="Arduino 代码编辑器"></textarea>
+          </div>
+          <div id="compilerMessage" class="compiler-message">等待编译。</div>
+        </section>
+      </section>
+    </main>
+
+    <template id="componentTemplate">
+      <article class="component">
+        <div class="component-visual">
+          <div class="led-bulb"></div>
+        </div>
+        <div class="component-fields">
+          <label>元件
+            <select class="component-type">
+              <option value="led">LED</option>
+              <option value="servo">Servo</option>
+              <option value="buzzer">Buzzer</option>
+            </select>
+          </label>
+          <label>引脚
+            <select class="component-pin"></select>
+          </label>
+          <button class="remove-component" type="button">删除</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

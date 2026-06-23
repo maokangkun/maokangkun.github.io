@@ -1,0 +1,1069 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --panel-strong: #f9fbfe;
+  --text: #18202f;
+  --muted: #637083;
+  --line: #d9e1ec;
+  --brand: #007c89;
+  --brand-strong: #005e67;
+  --accent: #ef9b20;
+  --danger: #c93838;
+  --ok: #169b62;
+  --code-bg: #101722;
+  --code-line: #1a2433;
+  --code-text: #eef6ff;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+.file-button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+button:hover,
+.file-button:hover {
+  border-color: var(--brand);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+  transform: none;
+}
+
+button.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.app-shell {
+  width: min(1800px, 100%);
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.workspace,
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(24, 32, 47, .06);
+}
+
+.workspace {
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-strong);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+h3 {
+  font-size: 14px;
+}
+
+.topbar p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.status-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.status-strip span {
+  min-width: 84px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: #eef4f8;
+  color: var(--brand-strong);
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.lab-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(640px, 1fr) 280px;
+  min-height: 680px;
+}
+
+.panel {
+  padding: 16px;
+}
+
+.toolbox,
+.inspector {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.toolbox {
+  border-right: 1px solid var(--line);
+}
+
+.inspector {
+  border-left: 1px solid var(--line);
+}
+
+.bench-panel {
+  position: relative;
+  min-width: 0;
+  padding: 16px;
+  background:
+    linear-gradient(rgba(0, 124, 137, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 124, 137, .06) 1px, transparent 1px),
+    #fbfdff;
+  background-size: 28px 28px;
+}
+
+.bench-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.bench-toolbar p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.bench-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.bench-canvas {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(170px, .52fr) minmax(460px, 1fr) minmax(170px, .52fr);
+  align-items: center;
+  gap: 28px;
+  min-height: 580px;
+  overflow: hidden;
+  border: 1px solid #c9d7e5;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .76);
+}
+
+.wire-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.wire-layer path {
+  fill: none;
+  stroke: #d64a35;
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 2px 2px rgba(24, 32, 47, .16));
+}
+
+.module-rail {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.arduino-board {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 590px);
+  aspect-ratio: 1.62;
+  margin: 0 auto;
+  border-radius: 24px 24px 32px 32px;
+  background:
+    radial-gradient(circle at 8% 12%, #d8f4f0 0 10px, transparent 11px),
+    radial-gradient(circle at 92% 12%, #d8f4f0 0 10px, transparent 11px),
+    radial-gradient(circle at 8% 88%, #d8f4f0 0 10px, transparent 11px),
+    radial-gradient(circle at 92% 88%, #d8f4f0 0 10px, transparent 11px),
+    linear-gradient(145deg, #0394a6, #006f80);
+  border: 4px solid #005868;
+  box-shadow: 0 26px 70px rgba(0, 58, 71, .28);
+}
+
+.arduino-board::before,
+.arduino-board::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .7);
+  width: 18px;
+  height: 18px;
+}
+
+.arduino-board::before {
+  left: 22px;
+  bottom: 22px;
+}
+
+.arduino-board::after {
+  right: 22px;
+  top: 22px;
+}
+
+.usb-port,
+.power-jack,
+.chip,
+.reset-button {
+  position: absolute;
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, .22);
+}
+
+.usb-port {
+  left: -8px;
+  top: 42%;
+  width: 72px;
+  height: 62px;
+  border-radius: 8px;
+  background: #c5ccd4;
+  border: 3px solid #8995a3;
+}
+
+.power-jack {
+  right: -10px;
+  top: 33px;
+  width: 78px;
+  height: 64px;
+  border-radius: 18px;
+  background: #232a33;
+  border: 4px solid #0f151d;
+}
+
+.board-label {
+  position: absolute;
+  left: 104px;
+  top: 78px;
+  color: #e9fbff;
+  text-transform: uppercase;
+}
+
+.board-label strong {
+  display: block;
+  font-size: 58px;
+  letter-spacing: 0;
+  line-height: .9;
+}
+
+.board-label span {
+  display: block;
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.chip {
+  display: grid;
+  place-items: center;
+  color: #d8e2ee;
+  background: #202936;
+  border: 2px solid #121821;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.main-chip {
+  left: 45%;
+  top: 42%;
+  width: 150px;
+  height: 56px;
+  border-radius: 8px;
+}
+
+.usb-chip {
+  left: 24%;
+  bottom: 70px;
+  width: 76px;
+  height: 36px;
+  border-radius: 6px;
+}
+
+.reset-button {
+  left: 25%;
+  top: 30px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 34px;
+  border-radius: 8px;
+  background: #d8e0e8;
+  color: #364252;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.board-led {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #80c66a;
+  box-shadow: 0 0 12px rgba(128, 198, 106, .74);
+}
+
+.led-rx {
+  left: 39%;
+  bottom: 46px;
+}
+
+.led-tx {
+  left: 43%;
+  bottom: 46px;
+  background: #ef9b20;
+  box-shadow: 0 0 12px rgba(239, 155, 32, .74);
+}
+
+.header {
+  position: absolute;
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 8px;
+  background: #141b25;
+  border: 2px solid rgba(255, 255, 255, .12);
+}
+
+.header-digital {
+  top: 16px;
+  left: 74px;
+  right: 82px;
+  justify-content: flex-end;
+}
+
+.header-analog {
+  bottom: 16px;
+  right: 88px;
+}
+
+.header-power {
+  bottom: 16px;
+  left: 88px;
+}
+
+.board-pin,
+.module-port {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border: 0;
+  cursor: pointer;
+}
+
+.board-pin {
+  width: 28px;
+  height: 38px;
+  min-height: 0;
+  padding: 0;
+  border-radius: 5px;
+  background: #232d3b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.board-pin::before,
+.module-port::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #101722;
+  border: 2px solid #d7e2ed;
+}
+
+.board-pin span {
+  position: absolute;
+  bottom: -16px;
+  color: #dff8ff;
+  font-size: 9px;
+}
+
+.header-digital .board-pin span {
+  bottom: auto;
+  top: 40px;
+}
+
+.board-pin.high::before {
+  background: var(--ok);
+  box-shadow: 0 0 12px rgba(22, 155, 98, .8);
+}
+
+.board-pin.pwm::before {
+  background: var(--accent);
+}
+
+.board-pin.selected,
+.module-port.selected {
+  outline: 3px solid #ffd36b;
+  outline-offset: 2px;
+}
+
+.sensor-module {
+  min-height: 112px;
+  padding: 12px;
+  border: 1px solid #cbd8e6;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(24, 32, 47, .12);
+}
+
+.sensor-module.active {
+  border-color: rgba(22, 155, 98, .45);
+  background: #f0fbf6;
+}
+
+.module-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.module-head strong {
+  font-size: 14px;
+}
+
+.module-kind {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.module-visual {
+  display: grid;
+  place-items: center;
+  min-height: 52px;
+  margin: 10px 0;
+  border-radius: 6px;
+  background: #eef4f8;
+}
+
+.module-ports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.module-port {
+  min-height: 30px;
+  min-width: 48px;
+  grid-template-columns: auto 1fr;
+  gap: 5px;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: #f9fbfe;
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.module-port::before {
+  width: 8px;
+  height: 8px;
+}
+
+.module-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.module-actions button {
+  min-height: 28px;
+  color: var(--danger);
+}
+
+.light-icon {
+  width: 32px;
+  height: 44px;
+  border-radius: 50% 50% 44% 44%;
+  background: #98a7b8;
+  box-shadow: inset 0 -8px 14px rgba(0, 0, 0, .18);
+}
+
+.sensor-module.active .light-icon {
+  background: #ff3b30;
+  box-shadow: 0 0 26px rgba(255, 59, 48, .58), inset 0 -8px 14px rgba(0, 0, 0, .1);
+}
+
+.servo-icon {
+  width: 54px;
+  height: 42px;
+  border-radius: 8px;
+  background: conic-gradient(from var(--angle, 0deg), #3478f6 0 18%, #d7e2ef 18% 100%);
+  border: 3px solid #596371;
+}
+
+.buzzer-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #202936 0 4px, #727f90 5px 8px);
+}
+
+.sensor-icon {
+  width: 60px;
+  height: 40px;
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 22% 50%, #202936 0 8px, transparent 9px),
+    radial-gradient(circle at 78% 50%, #202936 0 8px, transparent 9px),
+    #77c8d3;
+  border: 3px solid #298795;
+}
+
+.panel-title {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.file-button input {
+  display: none;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.control-group,
+.breakpoint-editor,
+.help-box {
+  margin-top: 18px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+input,
+select {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0 10px;
+  background: #fff;
+  color: var(--text);
+}
+
+input[type="range"] {
+  padding: 0;
+}
+
+.help-box {
+  padding: 12px;
+  border-radius: 8px;
+  background: #eef8f7;
+  color: #24535b;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.editor-pane {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  background: var(--code-bg);
+}
+
+.editor-title {
+  padding: 12px 14px;
+  margin: 0;
+  border-bottom: 1px solid #243045;
+  color: var(--code-text);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.editor-wrap {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  min-height: 520px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.line-numbers {
+  padding: 14px 8px;
+  background: #0d131d;
+  color: #7890ad;
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-align: right;
+  overflow: hidden;
+  user-select: none;
+  white-space: pre;
+}
+
+.line-numbers span {
+  display: block;
+  min-height: 21.7px;
+  border-radius: 4px;
+  padding-right: 6px;
+}
+
+.line-numbers .active {
+  background: #31415c;
+  color: #fff;
+}
+
+.line-numbers .breakpoint {
+  color: #ff776d;
+  font-weight: 800;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  border: 0;
+  outline: 0;
+  resize: none;
+  padding: 14px 16px;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  tab-size: 2;
+}
+
+.compiler-message {
+  min-height: 42px;
+  padding: 10px 14px;
+  border-top: 1px solid #243045;
+  color: #b8c7da;
+  font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.compiler-message.error {
+  color: #ffb4ad;
+}
+
+.compiler-message.ok {
+  color: #93e1b8;
+}
+
+.debug-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.debug-grid div {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-strong);
+}
+
+.debug-grid span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.debug-grid strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 18px;
+}
+
+.breakpoint-editor div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.breakpoint-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+}
+
+.breakpoint-list button {
+  min-height: 30px;
+  color: var(--danger);
+}
+
+.simulator-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.45fr) minmax(280px, .85fr) minmax(300px, .9fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.code-station {
+  margin-top: 16px;
+}
+
+.code-station .editor-pane {
+  min-height: 420px;
+  border: 1px solid #243045;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-station .editor-wrap,
+.code-station textarea {
+  min-height: 360px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 4px;
+  background: var(--line);
+}
+
+.dot.high {
+  background: var(--ok);
+}
+
+.dot.pwm {
+  background: var(--accent);
+}
+
+.dot.input {
+  background: #3478f6;
+}
+
+.pin-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  gap: 10px;
+}
+
+.pin {
+  min-height: 82px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-strong);
+}
+
+.pin.high {
+  border-color: rgba(22, 155, 98, .45);
+  background: #eefaf5;
+}
+
+.pin.pwm {
+  border-color: rgba(239, 155, 32, .45);
+}
+
+.pin.input {
+  border-color: rgba(52, 120, 246, .4);
+}
+
+.pin-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+}
+
+.pin-mode,
+.pin-value {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.pin-meter {
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 99px;
+  background: #dbe4ef;
+  overflow: hidden;
+}
+
+.pin-meter span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--brand);
+}
+
+.components {
+  display: grid;
+  gap: 12px;
+}
+
+.component {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-strong);
+}
+
+.component-visual {
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eaf0f7;
+}
+
+.led-bulb {
+  width: 38px;
+  height: 38px;
+  border-radius: 50% 50% 45% 45%;
+  background: #9aa7b8;
+  box-shadow: inset 0 -8px 14px rgba(0, 0, 0, .18);
+  transition: background 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.component.on .led-bulb {
+  background: #ff3b30;
+  box-shadow: 0 0 26px rgba(255, 59, 48, .58), inset 0 -8px 14px rgba(0, 0, 0, .12);
+  transform: scale(1.05);
+}
+
+.component.servo .led-bulb {
+  border-radius: 8px;
+  background: conic-gradient(from var(--angle, 0deg), #3478f6 0 18%, #d7e2ef 18% 100%);
+}
+
+.component.buzzer .led-bulb {
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #222 0 4px, #596371 5px 8px);
+}
+
+.component.buzzer.on .led-bulb {
+  box-shadow: 0 0 22px rgba(239, 155, 32, .5);
+}
+
+.component-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.analog-controls {
+  margin-top: 18px;
+}
+
+#analogInputs {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.analog-row {
+  display: grid;
+  grid-template-columns: 38px 1fr 44px;
+  align-items: center;
+  gap: 8px;
+}
+
+.serial-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+}
+
+#serialOutput {
+  flex: 1;
+  min-height: 230px;
+  max-height: 420px;
+  overflow: auto;
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #0e1621;
+  color: #d9f2e5;
+  font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.serial-input {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+@media (max-width: 1180px) {
+  .lab-layout,
+  .simulator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbox,
+  .inspector {
+    border: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status-strip {
+    justify-content: flex-start;
+  }
+
+  .bench-canvas {
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .module-rail {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 10px;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+
+  .editor-wrap {
+    grid-template-columns: 44px 1fr;
+  }
+
+  .bench-actions {
+    justify-content: flex-start;
+  }
+
+  .bench-canvas {
+    min-height: auto;
+    padding: 12px 0;
+  }
+
+  .arduino-board {
+    width: 96%;
+  }
+
+  .board-pin {
+    width: 20px;
+    height: 30px;
+    font-size: 8px;
+  }
+
+  .header {
+    gap: 2px;
+    padding: 4px;
+  }
+
+  .board-label strong {
+    font-size: 36px;
+  }
+
+  .chip,
+  .reset-button,
+  .board-label span {
+    font-size: 9px;
+  }
+
+  .component,
+  .component-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .status-strip span {
+    min-width: auto;
+  }
+}

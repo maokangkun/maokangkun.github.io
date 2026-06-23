@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maokangkun | 作品集</title>
+    <meta
+      name="description"
+      content="Maokangkun 的个人网站，收录交互教程、视觉实验、仿真工具与学习作品。"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f7f2e8;
+        --paper-deep: #eee5d5;
+        --ink: #25231f;
+        --muted: #756f64;
+        --quiet: #a29a8c;
+        --line: rgba(37, 35, 31, 0.16);
+        --red: #9f3f32;
+        --moss: #526454;
+        --indigo: #39495d;
+        --shadow: 0 24px 70px rgba(57, 48, 35, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(159, 63, 50, 0.08), transparent 28rem),
+          radial-gradient(circle at 88% 8%, rgba(82, 100, 84, 0.12), transparent 24rem),
+          linear-gradient(180deg, #fbf7ee 0%, var(--paper) 52%, #efe4d3 100%);
+        color: var(--ink);
+        font-family:
+          "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "Noto Serif CJK SC", Georgia,
+          serif;
+        letter-spacing: 0;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(72, 62, 48, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(72, 62, 48, 0.035) 1px, transparent 1px);
+        background-size: 36px 36px;
+        mask-image: linear-gradient(to bottom, black, transparent 82%);
+        content: "";
+      }
+
+      body::after {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.48;
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(37, 35, 31, 0.05) 0 1px, transparent 1px),
+          radial-gradient(circle at 72% 62%, rgba(37, 35, 31, 0.035) 0 1px, transparent 1px);
+        background-size: 29px 31px, 43px 47px;
+        mix-blend-mode: multiply;
+        content: "";
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        padding: 20px clamp(20px, 5vw, 68px);
+        border-bottom: 1px solid rgba(37, 35, 31, 0.08);
+        background: rgba(247, 242, 232, 0.78);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      .seal {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--red);
+        color: #fff8ec;
+        font-size: 0.78rem;
+        font-weight: 700;
+        box-shadow: 0 8px 24px rgba(159, 63, 50, 0.24);
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 0.98rem;
+        line-height: 1;
+      }
+
+      .brand small {
+        display: block;
+        margin-top: 4px;
+        color: var(--quiet);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+
+      .nav {
+        display: flex;
+        gap: clamp(16px, 3vw, 36px);
+        color: var(--muted);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-size: 0.88rem;
+      }
+
+      .nav a {
+        position: relative;
+      }
+
+      .nav a::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -7px;
+        height: 1px;
+        background: var(--red);
+        opacity: 0;
+        transform: scaleX(0.2);
+        transition: 180ms ease;
+        content: "";
+      }
+
+      .nav a:hover::after {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        min-height: calc(100svh - 76px);
+        padding: clamp(54px, 8vw, 110px) clamp(20px, 5vw, 68px) 44px;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        position: absolute;
+        top: 8%;
+        right: clamp(18px, 7vw, 120px);
+        width: min(42vw, 520px);
+        height: min(42vw, 520px);
+        border: 1px solid rgba(37, 35, 31, 0.08);
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(159, 63, 50, 0.08), transparent 27%),
+          repeating-radial-gradient(circle, transparent 0 28px, rgba(37, 35, 31, 0.045) 29px 30px);
+        animation: breathe 10s ease-in-out infinite;
+        content: "";
+      }
+
+      .hero-inner {
+        position: relative;
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+        gap: clamp(36px, 8vw, 110px);
+        align-items: end;
+      }
+
+      .kicker {
+        margin: 0 0 26px;
+        color: var(--red);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 860px;
+        font-size: clamp(3.6rem, 9.5vw, 9.2rem);
+        font-weight: 500;
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      h1 span {
+        display: block;
+      }
+
+      .thin {
+        color: rgba(37, 35, 31, 0.48);
+        font-weight: 300;
+      }
+
+      .lead {
+        max-width: 640px;
+        margin: 34px 0 0;
+        color: var(--muted);
+        font-size: clamp(1rem, 1.45vw, 1.18rem);
+        line-height: 2.08;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 34px;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 20px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 252, 244, 0.46);
+        color: var(--ink);
+        font-weight: 650;
+        transition:
+          transform 180ms ease,
+          background 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .button.primary {
+        border-color: transparent;
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        border-color: rgba(159, 63, 50, 0.4);
+        background: rgba(255, 252, 244, 0.78);
+      }
+
+      .button.primary:hover {
+        background: var(--red);
+        color: #fff8ec;
+      }
+
+      .haiku {
+        align-self: center;
+        justify-self: end;
+        writing-mode: vertical-rl;
+        min-height: 360px;
+        padding: 28px 22px;
+        border-left: 1px solid var(--line);
+        border-right: 1px solid rgba(37, 35, 31, 0.08);
+        color: var(--muted);
+        line-height: 2.4;
+        letter-spacing: 0.12em;
+      }
+
+      .haiku strong {
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      .scroll {
+        position: absolute;
+        left: clamp(20px, 5vw, 68px);
+        bottom: 22px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--quiet);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+
+      .scroll::after {
+        width: 72px;
+        height: 1px;
+        background: var(--line);
+        content: "";
+      }
+
+      .section {
+        width: min(1180px, calc(100% - clamp(40px, 10vw, 136px)));
+        margin: 0 auto;
+        padding: clamp(72px, 10vw, 128px) 0;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 440px);
+        gap: 36px;
+        align-items: end;
+        margin-bottom: 38px;
+      }
+
+      .section h2 {
+        margin: 0;
+        font-size: clamp(2.1rem, 5vw, 5.2rem);
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 2;
+      }
+
+      .works {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        border-top: 1px solid var(--line);
+      }
+
+      .work {
+        position: relative;
+        min-height: 250px;
+        grid-column: span 4;
+        padding: 28px 26px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 252, 244, 0.24);
+        overflow: hidden;
+        transition:
+          background 180ms ease,
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .work.large {
+        grid-column: span 6;
+      }
+
+      .work::before {
+        position: absolute;
+        inset: 18px;
+        border: 1px solid rgba(37, 35, 31, 0.08);
+        opacity: 0;
+        transform: scale(0.985);
+        transition: 180ms ease;
+        content: "";
+      }
+
+      .work::after {
+        position: absolute;
+        right: 22px;
+        bottom: 18px;
+        color: rgba(37, 35, 31, 0.08);
+        font-size: 6.6rem;
+        line-height: 1;
+        content: attr(data-kana);
+      }
+
+      .work:hover {
+        z-index: 2;
+        background: rgba(255, 252, 244, 0.78);
+        box-shadow: var(--shadow);
+        transform: translateY(-4px);
+      }
+
+      .work:hover::before {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .work-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        color: var(--quiet);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .work h3 {
+        position: relative;
+        z-index: 1;
+        margin: 70px 0 14px;
+        font-size: clamp(1.42rem, 2.4vw, 2.22rem);
+        font-weight: 450;
+        line-height: 1.18;
+      }
+
+      .work p {
+        position: relative;
+        z-index: 1;
+        max-width: 520px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.9;
+      }
+
+      .note {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: clamp(28px, 7vw, 96px);
+        align-items: center;
+        padding: clamp(30px, 6vw, 62px);
+        border: 1px solid var(--line);
+        background:
+          linear-gradient(90deg, rgba(255, 252, 244, 0.62), rgba(255, 252, 244, 0.22)),
+          rgba(255, 252, 244, 0.36);
+      }
+
+      .note h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 4.4rem);
+        font-weight: 400;
+        line-height: 1.08;
+      }
+
+      .note p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 2.08;
+      }
+
+      .note-mark {
+        width: 82px;
+        height: 82px;
+        margin-bottom: 26px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 40% 38%, rgba(255, 248, 236, 0.84) 0 14%, transparent 15%),
+          var(--red);
+        box-shadow: 0 18px 46px rgba(159, 63, 50, 0.2);
+      }
+
+      footer {
+        width: min(1180px, calc(100% - clamp(40px, 10vw, 136px)));
+        margin: 0 auto;
+        padding: 34px 0 54px;
+        border-top: 1px solid var(--line);
+        color: var(--quiet);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-size: 0.86rem;
+      }
+
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 0.72;
+        }
+        50% {
+          transform: translateY(14px) scale(1.035);
+          opacity: 0.46;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 1ms !important;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .hero-inner,
+        .section-head,
+        .note {
+          grid-template-columns: 1fr;
+        }
+
+        .haiku {
+          justify-self: start;
+          writing-mode: horizontal-tb;
+          min-height: auto;
+          padding: 18px 0 0;
+          border-left: 0;
+          border-right: 0;
+          border-top: 1px solid var(--line);
+          line-height: 2;
+        }
+
+        .work,
+        .work.large {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .topbar {
+          padding: 16px 20px;
+        }
+
+        .nav {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 44px 20px 70px;
+        }
+
+        .hero-inner {
+          width: min(100%, 330px);
+          margin: 0;
+        }
+
+        .hero::before {
+          width: 300px;
+          height: 300px;
+          right: -110px;
+          top: 90px;
+        }
+
+        h1 {
+          font-size: clamp(3.2rem, 15vw, 4.25rem);
+        }
+
+        .lead,
+        .section-head p,
+        .work p,
+        .note p {
+          word-break: break-all;
+          overflow-wrap: anywhere;
+        }
+
+        .hero-actions {
+          display: grid;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .haiku {
+          display: none;
+        }
+
+        .section {
+          width: min(calc(100% - 40px), 330px);
+          margin-left: 20px;
+          margin-right: auto;
+          padding: 74px 0;
+        }
+
+        .works {
+          display: block;
+        }
+
+        .work,
+        .work.large {
+          display: block;
+          min-height: 236px;
+          border-right: 0;
+        }
+
+        .work h3 {
+          margin-top: 54px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="回到首页">
+        <span class="seal">間</span>
+        <span>
+          <strong>Maokangkun</strong>
+          <small>Quiet Works</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="首页导航">
+        <a href="#works">作品</a>
+        <a href="#about">余白</a>
+        <a href="https://github.com/maokangkun">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <p class="kicker">personal site / small tools / slow craft</p>
+            <h1>
+              <span>小さな</span>
+              <span class="thin">实验室</span>
+            </h1>
+            <p class="lead">
+              这里放一些做给自己、也愿意给别人打开看的作品。它们有的像工具，有的像教程，
+              有的只是一次视觉练习。风格不求喧哗，只保留可以停留的细节。
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#works">看作品</a>
+              <a class="button" href="./app/chinoiserie/">听一曲</a>
+            </div>
+          </div>
+
+          <aside class="haiku" aria-label="首页短句">
+            <strong>七件作品</strong>
+            <span>，一页目录。</span>
+            <span>把复杂的东西，</span>
+            <span>慢慢做得清楚。</span>
+          </aside>
+        </div>
+        <div class="scroll" aria-hidden="true">scroll</div>
+      </section>
+
+      <section class="section" id="works">
+        <div class="section-head">
+          <h2>作品</h2>
+          <p>
+            从浏览器里的 Arduino 实验台，到 Lean 4 学习路线、旅行日语和中国风音画。
+            每个入口都尽量独立、可运行、能互动。
+          </p>
+        </div>
+
+        <div class="works">
+          <a class="work large" href="./app/arduino/" data-kana="電">
+            <div class="work-meta">
+              <span>Simulator</span>
+              <span>01</span>
+            </div>
+            <h3>Arduino 仿真模拟器</h3>
+            <p>在网页里上传代码、连接元件、观察引脚变化和串口输出。</p>
+          </a>
+
+          <a class="work large" href="./app/chinoiserie/" data-kana="音">
+            <div class="work-meta">
+              <span>Canvas Music</span>
+              <span>02</span>
+            </div>
+            <h3>藏发琴师</h3>
+            <p>中国风动画播放器，歌词、音乐与画面在同一个节奏里展开。</p>
+          </a>
+
+          <a class="work" href="./app/old-software/" data-kana="古">
+            <div class="work-meta">
+              <span>Retro Runtime</span>
+              <span>03</span>
+            </div>
+            <h3>软件遗迹复活器</h3>
+            <p>读取旧式 stack，复原卡片界面，并生成考古式报告。</p>
+          </a>
+
+          <a class="work" href="./app/blackhole.html" data-kana="宙">
+            <div class="work-meta">
+              <span>Three.js</span>
+              <span>04</span>
+            </div>
+            <h3>黑洞事件视界</h3>
+            <p>一个可以旋转、缩放的黑洞和吸积盘视觉实验。</p>
+          </a>
+
+          <a class="work" href="./study/lean4/" data-kana="理">
+            <div class="work-meta">
+              <span>AI Math</span>
+              <span>05</span>
+            </div>
+            <h3>Lean 4 入门教程</h3>
+            <p>用一周建立形式化证明、tactic 和 AI 数学解题的基本语感。</p>
+          </a>
+
+          <a class="work" href="./study/divination/" data-kana="卜">
+            <div class="work-meta">
+              <span>Knowledge Map</span>
+              <span>06</span>
+            </div>
+            <h3>一周命理入门</h3>
+            <p>把阴阳五行、卦象、排盘与日常练习整理成一张学习地图。</p>
+          </a>
+
+          <a class="work" href="./study/japanese/" data-kana="旅">
+            <div class="work-meta">
+              <span>Language Tool</span>
+              <span>07</span>
+            </div>
+            <h3>一周旅行日语</h3>
+            <p>面向旅行场景的短句、单词、语法、对话和随机拓展练习。</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="note">
+          <div>
+            <div class="note-mark" aria-hidden="true"></div>
+            <h2>余白也是界面的一部分。</h2>
+          </div>
+          <p>
+            这个首页只做三件事：给作品留出安静的位置，给访问者清楚的入口，
+            也给页面一点可以呼吸的节奏。没有重型框架，没有构建步骤，
+            放在 GitHub Pages 上就能直接打开。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Maokangkun. Static pages, quiet tools.</span>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>藏发琴师 | 中国风动画</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23101418'/%3E%3Cpath d='M15 40c12-22 26-22 34 0' fill='none' stroke='%23d7b56d' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M20 42c12 5 24 5 36 0' fill='none' stroke='%23b84a3e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="stage" aria-label="藏发琴师中国风动画">
+      <canvas id="scene" aria-hidden="true"></canvas>
+
+      <section class="poem-panel" aria-live="polite">
+        <h1>藏发琴师</h1>
+        <div class="lyric-wrap">
+          <p id="prevLyric" class="lyric side"></p>
+          <p id="currentLyric" class="lyric current">听一曲长安旧梦</p>
+          <p id="nextLyric" class="lyric side"></p>
+        </div>
+      </section>
+
+      <div class="progress-shell" aria-label="播放进度">
+        <div id="progress" class="progress"></div>
+      </div>
+
+      <audio id="audio" preload="auto" autoplay loop playsinline src="./res/藏发琴师.mp3"></audio>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
