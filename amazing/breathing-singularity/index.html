@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Breathing Singularity</title>
+    <link rel="icon" href="data:," />
+    <meta
+      name="description"
+      content="一个黑色空间里的呼吸光点，靠近时产生引力透镜，点击后进入白色空间。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="experience" aria-label="Breathing singularity WebGL experience">
+      <canvas id="singularity" aria-hidden="true"></canvas>
+
+      <section class="field-copy" aria-hidden="true">
+        <p class="copy-line copy-line-a">before light had a name</p>
+        <p class="copy-line copy-line-b">gravity remembers the first pixel</p>
+        <p class="copy-line copy-line-c">inhale&nbsp;&nbsp;&nbsp;&nbsp;exhale</p>
+      </section>
+
+      <button class="singularity-hit" type="button" aria-label="进入白色空间"></button>
+
+      <section class="white-room" aria-live="polite">
+        <div class="white-room__inner">
+          <p>一切都展开了。</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

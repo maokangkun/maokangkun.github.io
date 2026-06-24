@@ -1,0 +1,144 @@
+:root {
+  color-scheme: light;
+  --veil: 0;
+  --copy-opacity: 0.58;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+body {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  letter-spacing: 0;
+}
+
+.experience {
+  position: fixed;
+  inset: 0;
+  isolation: isolate;
+  cursor: crosshair;
+  background: #fff;
+}
+
+#ink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.experience::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0) 0 32%, rgba(255, 255, 255, 0.48) 74%, #fff 100%),
+    linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.2));
+  opacity: calc(0.16 + var(--veil) * 0.46);
+  mix-blend-mode: lighten;
+}
+
+.quiet-copy {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(24px, 5vh, 54px);
+  z-index: 3;
+  pointer-events: none;
+  opacity: var(--copy-opacity);
+  transform: translateX(-50%);
+  transition: opacity 600ms ease;
+}
+
+.quiet-copy p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: clamp(0.64rem, 1.2vw, 0.82rem);
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.reset-button {
+  position: absolute;
+  right: clamp(16px, 3vw, 36px);
+  bottom: clamp(16px, 3vw, 36px);
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  border-radius: 999px;
+  color: rgba(0, 0, 0, 0.55);
+  background: rgba(255, 255, 255, 0.74);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.reset-button span {
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.reset-button:hover,
+.reset-button:focus-visible {
+  border-color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.reset-button:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+  outline-offset: 4px;
+}
+
+.experience.has-ink .reset-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.experience.is-revealed {
+  --copy-opacity: 0;
+}
+
+@media (max-width: 640px) {
+  .reset-button {
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiet-copy,
+  .reset-button {
+    transition-duration: 1ms;
+  }
+}

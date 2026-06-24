@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 制药一周互动教程</title>
+    <meta
+      name="description"
+      content="面向零基础学习者的 AI 制药一周系统教程，包含药物发现流程、分子表示、机器学习、虚拟筛选、ADMET 和临床转化。"
+    />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#dashboard" aria-label="回到学习控制台">
+        <span class="brand-mark">AD</span>
+        <span>
+          <strong>AI Drug Lab</strong>
+          <small>药物发现 / 机器学习 / 转化</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="主要章节">
+        <a href="#plan">一周路线</a>
+        <a href="#pipeline">研发流程</a>
+        <a href="#molecule">分子表示</a>
+        <a href="#screening">虚拟筛选</a>
+        <a href="#admet">ADMET</a>
+        <a href="#quiz">自测</a>
+      </nav>
+      <button class="icon-btn" id="resetProgress" type="button" title="重置进度" aria-label="重置进度">
+        ↺
+      </button>
+    </header>
+
+    <main>
+      <section class="dashboard" id="dashboard">
+        <div class="dashboard-copy">
+          <p class="eyebrow">7 天建立专业知识框架</p>
+          <h1>
+            <span>从零理解</span>
+            <span>AI 制药如何把生物学、化学、数据和临床证据接在一起。</span>
+          </h1>
+          <p class="lead">
+            这不是“AI 自动发明神药”的科普页，而是一套压缩的一周训练营：你会学会药物研发链路、靶点发现、
+            分子表示、QSAR、深度学习、生成模型、分子对接、ADMET、安全性、实验验证和产业评估指标。
+          </p>
+          <div class="quick-actions">
+            <a class="primary-btn" href="#plan">开始第 1 天</a>
+            <a class="secondary-btn" href="#pipeline">先看全流程</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="学习状态与示意图">
+          <canvas id="heroCanvas" width="560" height="390" aria-label="AI 制药系统示意图"></canvas>
+          <div class="stats">
+            <div>
+              <strong id="doneCount">0</strong>
+              <span>完成任务</span>
+            </div>
+            <div>
+              <strong id="quizScore">0%</strong>
+              <span>自测正确率</span>
+            </div>
+            <div>
+              <strong id="conceptCount">0</strong>
+              <span>已读概念</span>
+            </div>
+          </div>
+          <div class="progress-shell" aria-label="总体进度">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section band" id="plan">
+        <div class="section-head">
+          <p class="eyebrow">daily route</p>
+          <h2>一周学习路线</h2>
+          <p>
+            每天 2.5 到 4 小时。目标是在一周内形成“能读论文、能判断项目、能继续自学”的知识骨架，
+            不是在七天里变成药化、计算生物学和临床专家。
+          </p>
+        </div>
+        <div class="day-layout">
+          <div class="day-tabs" id="dayTabs" role="tablist" aria-label="选择学习日"></div>
+          <article class="day-card" id="dayDetail" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="section grid-two" id="pipeline">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">end-to-end map</p>
+            <h2>药物研发不是一个模型，而是一条证据链</h2>
+            <p>
+              点击流程节点，查看每个阶段的 AI 任务、输入数据、常见模型、关键指标和失败原因。
+              AI 真正有价值的地方，是让证据迭代更快、更便宜、更可追踪。
+            </p>
+          </div>
+          <div class="canvas-card">
+            <canvas id="pipelineCanvas" width="980" height="560" aria-label="AI 药物研发流程图"></canvas>
+          </div>
+        </div>
+        <aside class="inspector" id="pipelineInspector">
+          <span class="tag">当前阶段</span>
+          <h3>靶点发现 Target Discovery</h3>
+          <p>从疾病机制、组学数据、遗传证据和文献中提出“干预哪个蛋白或通路可能改变疾病进程”。</p>
+          <dl>
+            <dt>AI 任务</dt>
+            <dd>多组学关联、知识图谱推理、文献挖掘、因果推断。</dd>
+            <dt>风险</dt>
+            <dd>相关不等于因果；细胞模型有效不代表人体有效。</dd>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="section band" id="molecule">
+        <div class="section-head">
+          <p class="eyebrow">molecular representation</p>
+          <h2>模型看到的不是“药”，而是不同形式的分子信息</h2>
+          <p>
+            AI 制药的第一道门槛是表示学习。SMILES、指纹、分子图、3D 构象和蛋白口袋各自保留的信息不同，
+            也会限制模型能学到什么。
+          </p>
+        </div>
+        <div class="molecule-lab">
+          <div class="tool-panel">
+            <canvas id="moleculeCanvas" width="820" height="500" aria-label="分子表示交互图"></canvas>
+            <div class="segmented" id="representationModes" aria-label="选择分子表示"></div>
+          </div>
+          <article class="lesson-card" id="representationCard" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="section grid-two">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">target biology</p>
+            <h2>靶点、疾病、通路和证据等级</h2>
+            <p>
+              AI 可以从大量数据里提出候选靶点，但药物项目最终要回答：这个靶点是否可成药、是否和疾病因果相关、
+              是否有安全窗口、是否能找到生物标志物。
+            </p>
+          </div>
+          <div class="canvas-card">
+            <canvas id="networkCanvas" width="850" height="500" aria-label="靶点疾病知识网络"></canvas>
+          </div>
+        </div>
+        <aside class="concept-stack" id="conceptStack"></aside>
+      </section>
+
+      <section class="section band" id="screening">
+        <div class="section-head">
+          <p class="eyebrow">virtual screening</p>
+          <h2>虚拟筛选：把上百万分子压缩成可实验验证的少数候选</h2>
+          <p>
+            调整筛选策略，观察命中率、假阳性、成本和新颖性的变化。现实项目通常会组合配体相似性、QSAR、
+            分子对接、药效团、主动学习和实验反馈。
+          </p>
+        </div>
+        <div class="screening-grid">
+          <div class="funnel-panel">
+            <canvas id="screeningCanvas" width="880" height="520" aria-label="虚拟筛选漏斗"></canvas>
+          </div>
+          <div class="control-panel">
+            <label>
+              库规模
+              <input id="librarySize" type="range" min="4" max="8" value="6" step="1" />
+              <span id="libraryValue">1,000,000</span>
+            </label>
+            <label>
+              模型阈值严格度
+              <input id="modelStrictness" type="range" min="1" max="10" value="6" step="1" />
+              <span id="strictnessValue">6 / 10</span>
+            </label>
+            <label>
+              结构信息质量
+              <input id="structureQuality" type="range" min="1" max="10" value="5" step="1" />
+              <span id="structureValue">5 / 10</span>
+            </label>
+            <div class="result-grid">
+              <div><strong id="hitCount">0</strong><span>建议实验测试</span></div>
+              <div><strong id="falsePositive">0%</strong><span>假阳性风险</span></div>
+              <div><strong id="noveltyScore">0%</strong><span>结构新颖性</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section grid-two" id="admet">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">ADMET & safety</p>
+            <h2>好分子不只要“有效”，还要能进入人体并足够安全</h2>
+            <p>
+              ADMET 指吸收、分布、代谢、排泄和毒性。许多早期看起来强效的分子，会因为溶解度、代谢稳定性、
+              hERG 心脏毒性、CYP 相互作用或肝毒性失败。
+            </p>
+          </div>
+          <div class="canvas-card">
+            <canvas id="admetCanvas" width="760" height="560" aria-label="ADMET 雷达图"></canvas>
+          </div>
+        </div>
+        <aside class="control-panel">
+          <label>
+            脂溶性 LogP
+            <input id="logp" type="range" min="0" max="6" value="3" step="0.1" />
+            <span id="logpValue">3.0</span>
+          </label>
+          <label>
+            分子量 MW
+            <input id="mw" type="range" min="180" max="720" value="420" step="10" />
+            <span id="mwValue">420</span>
+          </label>
+          <label>
+            极性表面积 TPSA
+            <input id="tpsa" type="range" min="20" max="180" value="85" step="5" />
+            <span id="tpsaValue">85</span>
+          </label>
+          <label>
+            体外活性 pIC50
+            <input id="potency" type="range" min="5" max="10" value="7.2" step="0.1" />
+            <span id="potencyValue">7.2</span>
+          </label>
+          <div class="advice-box" id="admetAdvice"></div>
+        </aside>
+      </section>
+
+      <section class="section band">
+        <div class="section-head">
+          <p class="eyebrow">model atlas</p>
+          <h2>AI 制药常见模型与用途速查</h2>
+          <p>
+            点击卡片标记“已读”。一周内先掌握每类模型解决什么问题、输入输出是什么、为什么会错。
+          </p>
+        </div>
+        <div class="model-grid" id="modelGrid"></div>
+      </section>
+
+      <section class="section grid-two">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">glossary trainer</p>
+            <h2>核心术语闪卡</h2>
+            <p>
+              药物研发的术语密度很高。先把这些词变成可调用的 mental model，再去读论文会轻松很多。
+            </p>
+          </div>
+          <div class="flashcard">
+            <div class="flash-head">
+              <span class="tag" id="cardTag">biology</span>
+              <button id="nextCard" class="ghost-btn" type="button">下一张</button>
+            </div>
+            <h3 id="cardTitle"></h3>
+            <p id="cardBody"></p>
+            <code id="cardExample"></code>
+          </div>
+        </div>
+        <aside class="case-panel">
+          <span class="tag">case thinking</span>
+          <h3>读 AI 制药案例时问 8 个问题</h3>
+          <ol>
+            <li>疾病机制和未满足临床需求是什么？</li>
+            <li>靶点证据来自遗传学、组学、实验还是文献相关？</li>
+            <li>模型输入数据是否足够接近真实决策场景？</li>
+            <li>是否有时间切分、外部验证和实验闭环？</li>
+            <li>命中分子是否新颖，还是只找到了训练集相似物？</li>
+            <li>活性提升是否牺牲 ADMET 或安全性？</li>
+            <li>有没有清晰的体内药效和 PK/PD 证据？</li>
+            <li>临床终点、患者分层和商业路径是否成立？</li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="section band">
+        <div class="section-head">
+          <p class="eyebrow">daily checklist</p>
+          <h2>每天完成这些动作</h2>
+          <p>勾选状态会保存在浏览器本地。它把学习从“看完”推到“能复述、能判断、能继续查”。</p>
+        </div>
+        <div class="checklist" id="checklist"></div>
+      </section>
+
+      <section class="section" id="quiz">
+        <div class="section-head">
+          <p class="eyebrow">checkpoint</p>
+          <h2>15 分钟专业自测</h2>
+          <p>这些题覆盖 AI 制药最常见的误区：数据泄漏、指标幻觉、靶点因果、分子表示、ADMET 和临床转化。</p>
+        </div>
+        <div class="quiz" id="quizBox"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        后续深入建议：药物化学、结构生物学、分子模拟、机器学习基础、临床试验设计、药代动力学与毒理学。
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

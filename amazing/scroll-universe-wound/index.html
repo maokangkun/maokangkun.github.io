@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scroll Universe Wound</title>
+    <link rel="icon" href="data:," />
+    <meta
+      name="description"
+      content="Scroll to open the universe: a single white line becomes a living cosmic wound."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="wound" aria-label="Scroll to open the universe">
+      <canvas id="universe" aria-hidden="true"></canvas>
+      <div class="wound__grain" aria-hidden="true"></div>
+      <div class="wound__copy" aria-hidden="true">
+        <p>Scroll to open the universe.</p>
+      </div>
+      <div class="wound__progress" aria-hidden="true"></div>
+    </main>
+
+    <div class="scroll-depth" aria-hidden="true"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

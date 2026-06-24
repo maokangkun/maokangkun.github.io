@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bending Glass</title>
+    <link rel="icon" href="data:," />
+    <meta
+      name="description"
+      content="一整页像透明玻璃一样弯曲、折射，并在点击文字时裂开的极简视觉实验。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="glass-stage" aria-label="Bending glass WebGL experience">
+      <canvas id="glass" aria-hidden="true"></canvas>
+      <canvas id="source" aria-hidden="true"></canvas>
+
+      <section class="hit-layer" aria-label="可点击的玻璃文字">
+        <p>This page is not a surface.</p>
+        <p><button class="word-hit" type="button" data-word="material">material</button> remembers pressure.</p>
+        <p>Move slowly. The letters are seen</p>
+        <p><button class="word-hit" type="button" data-word="through">through</button> the bend, not moved by it.</p>
+        <p>Touch one word and the <button class="word-hit" type="button" data-word="glass">glass</button></p>
+        <p>decides where to break.</p>
+      </section>
+
+      <div class="fallback">
+        <p>This page is not a surface. material remembers pressure.</p>
+        <p>Move slowly. The letters are seen through the bend, not moved by it.</p>
+        <p>Touch one word and the glass decides where to break.</p>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

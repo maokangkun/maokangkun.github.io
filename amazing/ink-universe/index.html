@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ink Universe</title>
+    <link rel="icon" href="data:," />
+    <meta
+      name="description"
+      content="一滴黑墨在白色页面扩散，点击落下新的墨滴，直到隐藏的星系图案浮现。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="experience" aria-label="Ink universe interactive canvas">
+      <canvas id="ink" aria-hidden="true"></canvas>
+
+      <section class="quiet-copy" aria-hidden="true">
+        <p>click to let another night fall</p>
+      </section>
+
+      <button class="reset-button" type="button" aria-label="重新开始">
+        <span>reset</span>
+      </button>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
