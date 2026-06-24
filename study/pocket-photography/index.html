@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pocket 摄影与剪辑一周互动教程</title>
+    <meta
+      name="description"
+      content="为 DJI Pocket 系列新手设计的一周摄影、运镜与剪辑交互教程。"
+    />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#studio" aria-label="回到学习控制台">
+        <span class="brand-mark">P</span>
+        <span>
+          <strong>Pocket Film Lab</strong>
+          <small>摄影 / 运镜 / 剪辑</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="主要章节">
+        <a href="#plan">一周路线</a>
+        <a href="#exposure">曝光</a>
+        <a href="#color">色彩</a>
+        <a href="#composition">构图</a>
+        <a href="#editing">剪辑</a>
+        <a href="#quiz">自测</a>
+      </nav>
+      <button class="icon-btn" id="resetProgress" type="button" title="重置进度" aria-label="重置进度">
+        ↺
+      </button>
+    </header>
+
+    <main>
+      <section class="studio" id="studio">
+        <div class="studio-copy">
+          <p class="eyebrow">7 天从零开始</p>
+          <h1>
+            <span>拿起 Pocket，</span>
+            <span>学会拍得清楚、稳，</span>
+            <span>好看，</span>
+            <span>再剪成一个完整短片。</span>
+          </h1>
+          <p class="lead">
+            这份教程按“拍摄前判断、现场拍摄、回家剪辑”来设计。你会先掌握曝光、焦段感、构图、运镜和声音，
+            再用一套固定剪辑流程，把每天的练习变成可复盘的作品。
+          </p>
+          <div class="quick-actions">
+            <a class="primary-btn" href="#plan">开始第 1 天</a>
+            <a class="secondary-btn" href="#exposure">先玩曝光三角</a>
+          </div>
+        </div>
+        <aside class="camera-panel" aria-label="学习状态与示意图">
+          <canvas id="heroCamera" width="520" height="360" aria-label="Pocket 相机示意图"></canvas>
+          <div class="stats">
+            <div>
+              <strong id="doneCount">0</strong>
+              <span>完成任务</span>
+            </div>
+            <div>
+              <strong id="quizScore">0%</strong>
+              <span>自测正确率</span>
+            </div>
+          </div>
+          <div class="progress-shell" aria-label="总体进度">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section band" id="plan">
+        <div class="section-head">
+          <p class="eyebrow">daily route</p>
+          <h2>一周学习路线</h2>
+          <p>
+            每天 1.5 到 3 小时。不要只看教程，每天都要拍 10 到 20 条素材，并在晚上剪出一个 20 到 45 秒片段。
+          </p>
+        </div>
+        <div class="day-layout">
+          <div class="day-tabs" id="dayTabs" role="tablist" aria-label="选择学习日"></div>
+          <article class="day-card" id="dayDetail" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="section grid-two" id="exposure">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">exposure triangle</p>
+            <h2>曝光三角不是背参数，是判断取舍</h2>
+            <p>
+              Pocket 系列通常是固定光圈，实战里你主要控制快门、ISO、帧率、ND 滤镜和补光。
+              调整滑块，观察画面亮度、运动模糊和噪点如何变化。
+            </p>
+          </div>
+          <div class="tool-panel">
+            <canvas id="exposureCanvas" width="760" height="470" aria-label="曝光三角图"></canvas>
+            <div class="controls">
+              <label>
+                快门速度
+                <input id="shutter" type="range" min="30" max="1000" value="120" step="10" />
+                <span id="shutterValue">1/120</span>
+              </label>
+              <label>
+                ISO
+                <input id="iso" type="range" min="100" max="3200" value="400" step="100" />
+                <span id="isoValue">400</span>
+              </label>
+              <label>
+                ND 强度
+                <input id="nd" type="range" min="0" max="5" value="1" step="1" />
+                <span id="ndValue">ND 2</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <aside class="lesson-card">
+          <span class="tag">实战口诀</span>
+          <h3 id="exposureTitle">先定帧率，再定快门</h3>
+          <p id="exposureAdvice">
+            日常视频先选 24/25/30fps 或 50/60fps。快门大约设为帧率的 2 倍；太亮就加 ND，太暗先补光，最后才提高 ISO。
+          </p>
+          <ul class="tight-list">
+            <li>人物对白：25fps + 1/50 左右，运动自然。</li>
+            <li>慢动作：50/60fps + 1/100 或 1/120，方便后期降速。</li>
+            <li>夜景：宁可少拍高速运动，也别把 ISO 拉太高。</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section band" id="color">
+        <div class="section-head">
+          <p class="eyebrow">color science</p>
+          <h2>色彩、动态范围、Log 和 LUT：先把概念放对位置</h2>
+          <p>
+            新手最容易把 D-Log、LUT、调色、滤镜混成一件事。这里把它们拆开：
+            拍摄时尽量保留信息，剪辑时先还原，再校正，最后才做风格。
+          </p>
+        </div>
+        <div class="color-lab">
+          <div class="knowledge-panel">
+            <div class="knowledge-tabs" id="knowledgeTabs" aria-label="色彩知识点"></div>
+            <article class="knowledge-card" id="knowledgeCard" aria-live="polite"></article>
+          </div>
+          <div class="lut-panel">
+            <div class="panel-head">
+              <span class="tag">LUT preview</span>
+              <h3>同一段素材的三种状态</h3>
+            </div>
+            <canvas id="lutCanvas" width="760" height="390" aria-label="Log 到 LUT 到风格调色示意"></canvas>
+            <div class="segmented" id="lutModes"></div>
+            <p id="lutAdvice" class="muted-copy"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section band" id="composition">
+        <div class="section-head">
+          <p class="eyebrow">composition & movement</p>
+          <h2>构图和运镜：让观众知道该看哪里</h2>
+          <p>
+            点击构图模式，RoughJS 会在取景框里画出参考线。再选择运镜类型，学习什么时候该动、怎么动、为什么动。
+          </p>
+        </div>
+        <div class="composition-grid">
+          <div class="frame-tool">
+            <canvas id="compositionCanvas" width="900" height="520" aria-label="构图取景框"></canvas>
+            <div class="segmented" id="compositionModes"></div>
+          </div>
+          <div class="movement-tool">
+            <h3>运镜选择器</h3>
+            <div class="movement-buttons" id="movementButtons"></div>
+            <div class="movement-output" id="movementOutput"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section grid-two" id="editing">
+        <div>
+          <div class="section-head compact">
+            <p class="eyebrow">editing workflow</p>
+            <h2>剪辑流程：从一堆素材到一条片子</h2>
+            <p>
+              新手最容易卡在“素材很多但不知道怎么剪”。下面这条流程固定下来，一周内先练稳定输出。
+            </p>
+          </div>
+          <div class="timeline" id="editTimeline"></div>
+        </div>
+        <aside class="pace-lab">
+          <span class="tag">节奏实验</span>
+          <h3>用镜头长度控制观感</h3>
+          <label>
+            平均镜头长度
+            <input id="shotLength" type="range" min="1" max="8" value="3" step="0.5" />
+            <span id="shotLengthValue">3.0 秒</span>
+          </label>
+          <canvas id="paceCanvas" width="520" height="260" aria-label="剪辑节奏示意图"></canvas>
+          <p id="paceAdvice">3 秒左右适合城市记录、旅行短片和生活 vlog，节奏清楚又不会太碎。</p>
+        </aside>
+      </section>
+
+      <section class="section band">
+        <div class="section-head">
+          <p class="eyebrow">field checklist</p>
+          <h2>外出拍摄前 60 秒检查</h2>
+          <p>把这份清单做成肌肉记忆，比多买一个配件更能提高出片率。勾选状态会保存在当前浏览器。</p>
+        </div>
+        <div class="checklist" id="checklist"></div>
+      </section>
+
+      <section class="section" id="quiz">
+        <div class="section-head">
+          <p class="eyebrow">checkpoint</p>
+          <h2>10 分钟自测</h2>
+          <p>答题不是为了分数，而是确认你拍摄时能马上做判断。</p>
+        </div>
+        <div class="quiz" id="quizBox"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        学习建议：每天拍一个固定主题，比如“早餐”“通勤”“楼下小店”“夜晚街角”。一周结束后，把 7 条练习剪成一个 2 分钟合集。
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
