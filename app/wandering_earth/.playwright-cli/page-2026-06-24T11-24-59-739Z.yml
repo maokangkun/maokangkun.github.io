@@ -1,0 +1,113 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - strong [ref=e7]: SELF COMPUTING SYSTEM
+      - text: LOCAL SYSTEM DEBUGGER · AUTO
+    - navigation "system menu" [ref=e8]:
+      - generic [ref=e9]: FILE
+      - generic [ref=e10]: EDIT
+      - generic [ref=e11]: VIEW
+      - generic [ref=e12]: PROJECT
+      - generic [ref=e13]: BUILD
+      - generic [ref=e14]: DEBUG
+      - generic [ref=e15]: TEAM
+      - generic [ref=e16]: TOOLS
+      - generic [ref=e17]: TEST
+      - generic [ref=e18]: ANALYZE
+      - generic [ref=e19]: WINDOW
+      - generic [ref=e20]: HELP
+    - generic [ref=e21]:
+      - generic [ref=e22]: SYSTEM19.0.022.3
+      - generic [ref=e23]: JURISDICTION
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - generic [ref=e26]: A
+      - generic [ref=e27]: B
+      - generic [ref=e28]: LOCAL SYSTEM DEBUGGER
+      - generic [ref=e29]: Auto
+      - generic [ref=e30]: Debug
+      - generic [ref=e31]: Test
+    - tablist "FUI screens" [ref=e32]:
+      - button "NETWORK" [ref=e33] [cursor=pointer]
+      - button "550W" [ref=e34] [cursor=pointer]
+      - button "GLOBAL" [ref=e35] [cursor=pointer]
+      - button "ELEVATOR" [active] [ref=e36] [cursor=pointer]
+      - button "J-20C" [ref=e37] [cursor=pointer]
+    - generic [ref=e38]: QUERY CODE
+  - text: REMOTE CONTROL ATTACKS COVERT INTEL ACQUISITION NETWORK WORMS RANSOMWARE ATTACKS OTHER ATTACKS
+  - region "space elevator central system" [ref=e1287]:
+    - generic [ref=e1288]:
+      - generic [ref=e1289]:
+        - generic [ref=e1290]:
+          - generic [ref=e1291]: CENTRAL SYSTEM
+          - generic [ref=e1292]: INTELLIGENT AI 024.25
+        - img [ref=e1293]
+        - generic [ref=e1305]: WARNING
+      - generic [ref=e1306]:
+        - generic [ref=e1307]: CABIN STATUS
+        - generic [ref=e1308]:
+          - generic [ref=e1309]:
+            - generic [ref=e1310]: CABIN-01
+            - img [ref=e1311]
+            - text: FAULT / WARNING
+          - generic [ref=e1316]:
+            - generic [ref=e1317]: CABIN-02
+            - img [ref=e1318]
+            - text: NORMAL / STANDBY
+          - generic [ref=e1323]:
+            - generic [ref=e1324]: CABIN-03
+            - img [ref=e1325]
+            - text: FAULT / WARNING
+          - generic [ref=e1330]:
+            - generic [ref=e1331]: CABIN-04
+            - img [ref=e1332]
+            - text: NORMAL / STANDBY
+          - generic [ref=e1337]:
+            - generic [ref=e1338]: CABIN-05
+            - img [ref=e1339]
+            - text: NORMAL / STANDBY
+          - generic [ref=e1344]:
+            - generic [ref=e1345]: CABIN-06
+            - img [ref=e1346]
+            - text: FAULT / WARNING
+          - generic [ref=e1351]:
+            - generic [ref=e1352]: CABIN-07
+            - img [ref=e1353]
+            - text: NORMAL / STANDBY
+          - generic [ref=e1358]:
+            - generic [ref=e1359]: CABIN-08
+            - img [ref=e1360]
+            - text: NORMAL / STANDBY
+      - generic [ref=e1365]:
+        - generic [ref=e1366]: SPACE ELEVATOR TRAFFIC CONTROL
+        - generic [ref=e1377]: CABIN-04 ASCENDING
+      - generic [ref=e1378]:
+        - generic [ref=e1379]:
+          - generic [ref=e1380]: RADAR MONITORING
+          - generic [ref=e1381]: WEATHER SYSTEM
+        - img [ref=e1382]
+      - generic [ref=e1392]:
+        - generic [ref=e1393]: SPACE ELEVATOR SYSTEM
+        - generic [ref=e1394]:
+          - generic [ref=e1395]:
+            - text: ACCESS PERMIT
+            - generic [ref=e1396]: Authorized
+          - generic [ref=e1397]: CABIN-04 PASS
+          - generic [ref=e1398]:
+            - generic [ref=e1399]: CABIN-04
+            - generic [ref=e1400]: ASCENDING
+            - generic [ref=e1401]: PRESSURE NORMAL
+            - generic [ref=e1402]: INTACT RATE 100%
+      - generic [ref=e1403]:
+        - generic [ref=e1404]:
+          - generic [ref=e1405]: RADAR MONITORING
+          - generic [ref=e1406]: WAITING FOR UEG
+        - img [ref=e1408]:
+          - generic [ref=e1452]: POINT-4
+          - generic [ref=e1453]: POINT-1
+  - generic [ref=e404]:
+    - generic [ref=e405]: LINE PROCESS
+    - generic [ref=e406]: CN 15
+    - generic [ref=e407]: POV 0.333528
+    - generic [ref=e408]: DISC SPACEBUS
+    - generic [ref=e409]: NETWORK SECURE

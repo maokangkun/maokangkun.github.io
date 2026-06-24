@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UEG FUI System</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23040909'/%3E%3Cpath d='M3 2h2v12H3z' fill='%23ef3f3d'/%3E%3Cpath d='M7 2h6v2H7zM7 7h6v2H7zM7 12h6v2H7z' fill='%2369e2a0'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="fui-shell">
+      <header class="system-bar">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <div>
+            <strong>SELF COMPUTING SYSTEM</strong>
+            <small>LOCAL SYSTEM DEBUGGER · AUTO</small>
+          </div>
+        </div>
+        <nav class="menu-line" aria-label="system menu">
+          <span>FILE</span>
+          <span>EDIT</span>
+          <span>VIEW</span>
+          <span>PROJECT</span>
+          <span>BUILD</span>
+          <span>DEBUG</span>
+          <span>TEAM</span>
+          <span>TOOLS</span>
+          <span>TEST</span>
+          <span class="active">ANALYZE</span>
+          <span>WINDOW</span>
+          <span>HELP</span>
+        </nav>
+        <div class="system-id">
+          <span>SYSTEM19.0.022.3</span>
+          <span>JURISDICTION</span>
+        </div>
+      </header>
+
+      <section class="control-strip">
+        <div class="strip-left">
+          <span class="mini-btn">A</span>
+          <span class="mini-btn">B</span>
+          <span class="route">LOCAL SYSTEM DEBUGGER</span>
+          <span class="select">Auto</span>
+          <span class="select">Debug</span>
+          <span class="select">Test</span>
+        </div>
+        <div class="mode-tabs" role="tablist" aria-label="FUI screens">
+          <button class="mode-tab is-active" type="button" data-screen="overview">NETWORK</button>
+          <button class="mode-tab" type="button" data-screen="mesh">550W</button>
+          <button class="mode-tab" type="button" data-screen="global">GLOBAL</button>
+          <button class="mode-tab" type="button" data-screen="elevator">ELEVATOR</button>
+          <button class="mode-tab" type="button" data-screen="fighter">J-20C</button>
+        </div>
+        <div class="query-box">QUERY CODE</div>
+      </section>
+
+      <section class="screen is-active" id="overview" aria-label="self computing system">
+        <aside class="left-rail">
+          <div class="panel rail-panel">
+            <div class="panel-title">STATUS-MONITOR</div>
+            <div class="status-list">
+              <div class="status-item"><span class="spark s1"></span><b>PROCESSING SPEED</b></div>
+              <div class="status-item"><span class="spark s2"></span><b>QUANTUM STORAGE</b></div>
+              <div class="status-item"><span class="spark s3"></span><b>STORAGE DEVICE A</b></div>
+              <div class="status-item"><span class="spark s4"></span><b>QUNTUM TRANSISTORS</b></div>
+              <div class="status-item"><span class="spark s5"></span><b>EFFECTIVE QUNTUM</b></div>
+            </div>
+          </div>
+          <div class="panel rail-panel grow">
+            <div class="panel-title">SYSTEM-MONITOR</div>
+            <ul class="plain-list">
+              <li>DATA DETECTION</li>
+              <li>DATA ACQUISITION</li>
+              <li class="hot">SELF DETECTION</li>
+              <li>SELF TESTING</li>
+              <li>DATA CALCULUS</li>
+              <li>DATABASE</li>
+              <li>RAW DATA</li>
+              <li>ANALYTICAL SOLUTION</li>
+              <li>SELG ORGANIZATION</li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="overview-grid">
+          <section class="panel support-panel">
+            <div class="panel-title spread"><span>SUPERPOSITION STATE</span><span>SYSTEM PERFORMANCE TEST</span></div>
+            <div class="terminal dense">
+              <p>QUERY / SELF RUNNING PROCESSOR MATRIX</p>
+              <p>RUN STATUS DIRECTIVE IN FUNCTION ACTIVEWAREX1 ROOT RUN STATUS DESIGNED ON FUNCTION ACTIVEWARE50XT PATH</p>
+              <p>CONNECTION ESTABLISHED / NODE HANDSHAKE / SYNC RATIO 99.7%</p>
+              <p>WIRELESS CONNECTION POINT OF THIRD PARTY IS DETECTED</p>
+              <p>PRIMARY ENGINE HOST CHECKSUM VERIFIED · SENSOR ARRAY LOCKED</p>
+              <p>THREAD RESOLVE 7F-04 / LUNAR BRIDGE ACTIVE / USER PATH SEALED</p>
+            </div>
+            <table class="micro-table">
+              <thead>
+                <tr><th>INPUT CODE</th><th>SERIAL NUMBER</th><th>CARGO NUMBER</th><th>OUTPUT CODES</th><th>SEQUENCE</th></tr>
+              </thead>
+              <tbody id="overviewRows"></tbody>
+            </table>
+          </section>
+
+          <section class="panel radar-panel">
+            <div class="panel-title">RADAR-MONITOR</div>
+            <div class="radar-wrap">
+              <svg class="radar-svg" viewBox="0 0 420 420" aria-hidden="true">
+                <defs>
+                  <radialGradient id="radarGlow" cx="50%" cy="50%" r="55%">
+                    <stop offset="0" stop-color="#d8fff0" stop-opacity=".22"></stop>
+                    <stop offset=".35" stop-color="#8de6c9" stop-opacity=".08"></stop>
+                    <stop offset="1" stop-color="#0b1615" stop-opacity="0"></stop>
+                  </radialGradient>
+                </defs>
+                <rect width="420" height="420" fill="transparent"></rect>
+                <circle cx="210" cy="210" r="196" fill="url(#radarGlow)" stroke="#82938e" stroke-width="1"></circle>
+                <circle cx="210" cy="210" r="154" fill="none" stroke="#72847f" stroke-width="1"></circle>
+                <circle cx="210" cy="210" r="108" fill="none" stroke="#61736e" stroke-width="1"></circle>
+                <circle cx="210" cy="210" r="58" fill="none" stroke="#50655f" stroke-width="1"></circle>
+                <g stroke="#60746e" stroke-width="1">
+                  <line x1="210" y1="14" x2="210" y2="406"></line>
+                  <line x1="14" y1="210" x2="406" y2="210"></line>
+                  <line x1="70" y1="70" x2="350" y2="350"></line>
+                  <line x1="350" y1="70" x2="70" y2="350"></line>
+                </g>
+                <g class="radar-blips" fill="#ff4848"></g>
+                <g fill="#ecfff6" font-size="12" font-family="var(--mono)">
+                  <text x="330" y="105">POINT-5</text>
+                  <text x="350" y="238">POINT-2</text>
+                  <text x="285" y="345">POINT-1</text>
+                  <text x="70" y="328">POINT-4</text>
+                  <text x="58" y="83">POINT-3</text>
+                  <text x="272" y="66" fill="#ff6969">AK</text>
+                  <text x="306" y="176" fill="#ff6969">BG</text>
+                  <text x="244" y="276" fill="#ff6969">TW</text>
+                  <text x="120" y="132" fill="#ff6969">EU</text>
+                </g>
+                <path class="sweep" d="M210 210 L210 16 A194 194 0 0 1 375 110 Z"></path>
+              </svg>
+            </div>
+            <div class="radar-legend">
+              <span>NAV</span><span>SOC</span><span>ID</span><span>H1</span><span>DEC</span><span>H4</span><span>COS</span>
+            </div>
+          </section>
+
+          <section class="panel resource-panel">
+            <div class="panel-title">RESOURCE MANAGER</div>
+            <div class="split">
+              <div class="tree">
+                <p>▸ SOLTIERBIA14IL06SUITE</p>
+                <p>▾ COMMENT</p>
+                <p>  ▸ INTEGER</p>
+                <p>  ▸ POST_ID INTEGER</p>
+                <p>  ▸ CONTENT TEXT</p>
+                <p>  ▸ AUTHORIZE MALITE</p>
+                <p>  ▾ TITLE TEXT</p>
+                <p>    170.550C-INPENGINE</p>
+                <p>    170.550C-INPENGINE</p>
+                <p>    170.550C-INPENGINE</p>
+              </div>
+              <div class="code-window">
+                <p><b>/* SEARCH ENGINE_SYS*/</b></p>
+                <p>RESEARCHING NETWORK INFORMATION...</p>
+                <p>THE WIRELESS CONNECTION POINT OF THE THIRD PARTY IS DETECTED</p>
+                <div class="auth-card">
+                  <div class="auth-title">AUTHORIZATION MANAGEMENT</div>
+                  <div class="hash-grid"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                  <p>WELCOME TO THE UEG LUNAR JOINT RESEARCH BASE SYSTEM VERSION 550C</p>
+                  <p>AUTHORIZATION INTERFACE · SIGNATURE ACCEPTED</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel overwrite-panel">
+            <div class="matrix-grid" id="overwriteMatrix"></div>
+            <div class="banner mid">REAL-TIME SYSTEM<br>OVERWRITE COMPLETED</div>
+            <div class="banner main">SPACE ELEVATOR CONTROL<br>OBTAINED</div>
+            <svg class="ring-diagram" viewBox="0 0 260 220" aria-hidden="true">
+              <circle cx="88" cy="112" r="76" fill="none" stroke="#e6f3ed" stroke-width="3"></circle>
+              <circle cx="88" cy="112" r="56" fill="none" stroke="#8a9c96" stroke-width="1"></circle>
+              <circle cx="88" cy="112" r="38" fill="none" stroke="#8a9c96" stroke-width="1"></circle>
+              <g stroke="#e6f3ed" stroke-width="2">
+                <line x1="12" y1="112" x2="164" y2="112"></line>
+                <line x1="88" y1="36" x2="88" y2="188"></line>
+                <line x1="34" y1="58" x2="142" y2="166"></line>
+                <line x1="142" y1="58" x2="34" y2="166"></line>
+              </g>
+              <path d="M205 20 L220 90 L220 206 M205 20 L190 90 L190 206 M181 92 H229 M175 206 H235" fill="none" stroke="#e6f3ed" stroke-width="4"></path>
+            </svg>
+          </section>
+
+          <section class="panel countdown-panel">
+            <div class="panel-title spread"><span>SYNCHRONIZED COUNTDOWN</span><span>THE ADAPTIVE IGNITION PROGRAM IS GENERATED</span></div>
+            <div class="count">00:00:01:37</div>
+            <div class="green-band">IGNITION PROCEDURE INITIATED</div>
+            <svg class="capsule" viewBox="0 0 620 160" aria-hidden="true">
+              <g fill="none" stroke="#b6c7c0" stroke-width="1.2">
+                <rect x="54" y="54" width="512" height="54"></rect>
+                <rect x="86" y="40" width="448" height="82"></rect>
+                <path d="M44 70 L86 42 M44 92 L86 120 M576 70 L534 42 M576 92 L534 120"></path>
+                <path d="M130 40 V122 M172 40 V122 M214 40 V122 M256 40 V122 M298 40 V122 M340 40 V122 M382 40 V122 M424 40 V122 M466 40 V122 M508 40 V122"></path>
+                <path d="M88 80 H532 M100 62 H520 M100 100 H520"></path>
+              </g>
+            </svg>
+          </section>
+
+          <aside class="panel jurisdiction">
+            <div class="panel-title">JURISDICTION</div>
+            <div id="jurisdictionList"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="mesh" aria-label="550w upload mesh">
+        <div class="window-frame">
+          <div class="window-toolbar">
+            <span>550W后台管理器</span>
+            <span>文件类型</span>
+            <span>Layout 01</span>
+            <span>搜索</span>
+            <span>资源管理器</span>
+          </div>
+          <div class="mesh-layout">
+            <aside class="panel file-tree">
+              <div class="panel-title">目录 / 550W</div>
+              <div class="tree" id="fileTree"></div>
+            </aside>
+            <section class="panel server-space">
+              <div class="server-grid" id="serverGrid"></div>
+              <div class="progress-modal">
+                <div class="modal-title">服务器组MESH总线配置策略。<b>60%</b></div>
+                <div class="progress-track"><span></span></div>
+              </div>
+              <div class="log-line">RUN STATUS DIRECTIVE ON FUNCTION ACTIVEWAREX1 ROOT RUN STATUS DESIGNED ON FUNCTION ACTIVEWARE50XT PATH</div>
+            </section>
+          </div>
+        </div>
+
+        <div class="window-frame secondary">
+          <div class="window-toolbar">
+            <span>互联网络解析</span>
+            <span>Batch CalibrationA</span>
+            <span>Main()</span>
+          </div>
+          <div class="resolve-layout">
+            <section class="panel selector-panel">
+              <div class="select-grid">
+                <span>服务器集群</span><span>总线策略配置</span><span>指令校验</span><span>主动回连</span>
+                <span>上传策略</span><span>通信节点</span><span>密钥握手</span><span>权限解锁</span>
+              </div>
+              <div class="node-grid" id="nodeGrid"></div>
+              <div class="progress-track wide"><span></span></div>
+              <div class="success-modal">
+                <strong>互 联 网 络 解 析 成 功</strong>
+                <button type="button">进入</button>
+              </div>
+            </section>
+            <aside class="panel rack-panel">
+              <div id="miniServers"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="global" aria-label="global military facilities network security assessment">
+        <div class="assessment">
+          <section class="panel world-panel">
+            <div class="panel-title large">GLOBAL MILITARY FACILITIES AND NETWORK SECURITY ASSESSMENT</div>
+            <div class="location-tabs"><b>LOCATION</b><span>EARTH</span></div>
+            <svg class="world-map" viewBox="0 0 1100 620" aria-hidden="true">
+              <defs>
+                <pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M40 0H0V40" fill="none" stroke="#24413e" stroke-width="1"></path>
+                </pattern>
+              </defs>
+              <rect width="1100" height="620" fill="url(#mapGrid)"></rect>
+              <g class="land">
+                <path d="M145 187 L205 136 L292 158 L318 218 L282 274 L304 350 L262 430 L198 405 L172 342 L128 318 L94 252 Z"></path>
+                <path d="M330 326 L392 292 L432 328 L420 412 L388 500 L342 472 L326 400 Z"></path>
+                <path d="M520 160 L608 128 L708 150 L812 138 L946 188 L1000 254 L958 318 L844 292 L780 360 L688 340 L612 382 L542 314 L482 268 Z"></path>
+                <path d="M576 314 L642 346 L670 444 L632 540 L552 518 L518 426 Z"></path>
+                <path d="M858 430 L932 450 L992 518 L932 568 L846 528 Z"></path>
+              </g>
+              <g id="attackDots"></g>
+              <g class="map-labels" font-family="var(--mono)" font-size="18">
+                <text x="74" y="402">2.5 BILLION TIMES</text>
+                <text x="760" y="88">HIGH RISK</text>
+                <text x="474" y="112">MEDIUM RISK</text>
+                <text x="884" y="354">LOW RISK</text>
+              </g>
+            </svg>
+            <div class="chart-row">
+              <div class="bar-chart" data-title="REMOTE CONTROL ATTACKS"></div>
+              <div class="bar-chart" data-title="COVERT INTEL ACQUISITION"></div>
+              <div class="bar-chart" data-title="NETWORK WORMS"></div>
+              <div class="bar-chart" data-title="RANSOMWARE ATTACKS"></div>
+              <div class="bar-chart" data-title="OTHER ATTACKS"></div>
+              <div class="alarm-table">
+                <b>COMMON ALARM CONTENTS</b>
+                <span>ROGUE HOST · 6000M</span>
+                <span>REMOTE SYSTEM · 98%</span>
+                <span>NETWORK WORM · 03%</span>
+              </div>
+            </div>
+          </section>
+          <aside class="panel right-stats">
+            <div class="panel-title">NUMBER OF CYBER ATTACKS</div>
+            <div class="total"><span>TOTAL</span><b>7.9 BILLION TIMES</b></div>
+            <div class="risk-grid">
+              <span>HIGH RISK<b>3.1</b></span>
+              <span>MEDIUM RISK<b>3.6</b></span>
+              <span>LOW RISK<b>1.1</b></span>
+            </div>
+            <div class="timeline" id="timeline"></div>
+          </aside>
+        </div>
+
+        <div class="assessment orbit">
+          <section class="panel orbit-panel">
+            <div class="panel-title">BIT AMPLITUDE FREQUENCY DIAGRAM 8804-35889</div>
+            <svg class="orbit-map" viewBox="0 0 720 460" aria-hidden="true">
+              <rect width="720" height="460" fill="#050908"></rect>
+              <g stroke="#24413e" stroke-width="1">
+                <path d="M0 230H720 M360 0V460"></path>
+                <path d="M80 80H640V380H80Z"></path>
+              </g>
+              <ellipse cx="360" cy="230" rx="260" ry="116" fill="none" stroke="#8f9f99"></ellipse>
+              <ellipse cx="360" cy="230" rx="170" ry="74" fill="none" stroke="#63353a"></ellipse>
+              <circle cx="360" cy="230" r="62" fill="#2a8fe1"></circle>
+              <circle cx="336" cy="212" r="30" fill="#87d978" opacity=".8"></circle>
+              <circle cx="392" cy="244" r="22" fill="#e2d3a2" opacity=".85"></circle>
+              <circle cx="500" cy="154" r="16" fill="#d5d6c6"></circle>
+              <path d="M205 181 L273 154 L322 172" fill="none" stroke="#d43b38" stroke-width="2"></path>
+              <path d="M478 154 L536 120 L612 146" fill="none" stroke="#eecc9a" stroke-width="2"></path>
+              <text x="128" y="176" fill="#f04a48" font-size="16">SINGULARITY POINT</text>
+              <text x="468" y="132" fill="#8bc5ff" font-size="16">LUNAR ORBIT DEVIATION POINT</text>
+              <text x="140" y="292" fill="#65d0ff" font-size="16">ORIGINAL LUNAR ORBIT</text>
+            </svg>
+          </section>
+          <aside class="panel data-visual">
+            <div class="panel-title">DATA VISUAL</div>
+            <table class="micro-table tall">
+              <tbody id="orbitRows"></tbody>
+            </table>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="elevator" aria-label="space elevator central system">
+        <div class="elevator-grid">
+          <section class="panel tower-panel">
+            <div class="panel-title spread"><span>CENTRAL SYSTEM</span><span>INTELLIGENT AI 024.25</span></div>
+            <svg class="tower-svg" viewBox="0 0 420 640" aria-hidden="true">
+              <g fill="none" stroke="#d8e7df" stroke-width="2">
+                <path d="M210 44 V604"></path>
+                <path d="M160 78 L210 44 L260 78 M160 78 V604 M260 78 V604"></path>
+                <path d="M124 242 H296 M100 330 H320 M82 424 H338 M64 520 H356"></path>
+                <path d="M124 242 L64 604 M296 242 L356 604 M100 330 L64 604 M320 330 L356 604"></path>
+                <ellipse cx="210" cy="160" rx="96" ry="28"></ellipse>
+                <ellipse cx="210" cy="190" rx="138" ry="42"></ellipse>
+                <path d="M112 190 C142 236 278 236 308 190"></path>
+              </g>
+              <g class="red-glow" fill="#f03836">
+                <rect x="146" y="286" width="44" height="34"></rect>
+                <rect x="230" y="286" width="44" height="34"></rect>
+                <rect x="156" y="404" width="108" height="42"></rect>
+              </g>
+            </svg>
+            <div class="warning-big">WARNING</div>
+          </section>
+
+          <section class="panel cabins-panel">
+            <div class="panel-title">CABIN STATUS</div>
+            <div class="cabin-grid" id="cabinGrid"></div>
+          </section>
+
+          <section class="panel ascend-panel">
+            <div class="panel-title">SPACE ELEVATOR TRAFFIC CONTROL</div>
+            <div class="tracks" id="tracks"></div>
+            <div class="red-banner">CABIN-04 ASCENDING</div>
+          </section>
+
+          <section class="panel weather-panel">
+            <div class="panel-title spread"><span>RADAR MONITORING</span><span>WEATHER SYSTEM</span></div>
+            <svg class="weather-map" viewBox="0 0 860 360" aria-hidden="true">
+              <rect width="860" height="360" fill="#151716"></rect>
+              <g stroke="#59645e" stroke-width="1" opacity=".65">
+                <path d="M0 60H860 M0 120H860 M0 180H860 M0 240H860 M0 300H860 M80 0V360 M160 0V360 M240 0V360 M320 0V360 M400 0V360 M480 0V360 M560 0V360 M640 0V360 M720 0V360 M800 0V360"></path>
+              </g>
+              <path d="M0 206 C96 174 126 112 214 132 C300 152 314 86 396 108 C486 130 550 72 638 92 C710 110 760 168 860 150 V360 H0 Z" fill="#747a76"></path>
+              <g class="storm">
+                <path d="M40 120 C130 70 210 170 314 118" stroke="#1bd25c" stroke-width="28" fill="none"></path>
+                <path d="M446 188 C540 124 646 236 784 154" stroke="#29d65a" stroke-width="34" fill="none"></path>
+                <path d="M542 194 C616 142 708 234 820 184" stroke="#ffc848" stroke-width="18" fill="none"></path>
+                <path d="M628 202 C684 160 742 220 808 196" stroke="#ff503c" stroke-width="10" fill="none"></path>
+              </g>
+            </svg>
+          </section>
+
+          <section class="panel pass-panel">
+            <div class="panel-title">SPACE ELEVATOR SYSTEM</div>
+            <div class="pass-layout">
+              <div class="gate">ACCESS PERMIT<br><b>Authorized</b></div>
+              <div class="green-pass">CABIN-04 PASS</div>
+              <div class="side-readout">
+                <b>CABIN-04</b>
+                <span>ASCENDING</span>
+                <span>PRESSURE NORMAL</span>
+                <span>INTACT RATE 100%</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel elevator-radar">
+            <div class="panel-title spread"><span>RADAR MONITORING</span><span>WAITING FOR UEG</span></div>
+            <div class="radar-slice">
+              <svg viewBox="0 0 720 420" aria-hidden="true">
+                <circle cx="380" cy="210" r="190" fill="none" stroke="#87928e"></circle>
+                <circle cx="380" cy="210" r="144" fill="none" stroke="#687773"></circle>
+                <circle cx="380" cy="210" r="92" fill="none" stroke="#53645f"></circle>
+                <path d="M380 210 L124 150 A296 296 0 0 1 386 20 Z" fill="#21c59a" opacity=".55"></path>
+                <g fill="#fb4b47" id="elevatorBlips"></g>
+                <text x="110" y="330" fill="#8ecfff">POINT-4</text>
+                <text x="518" y="76" fill="#e8f8f0">POINT-1</text>
+              </svg>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="screen" id="fighter" aria-label="j20c stealth fighter interface">
+        <div class="fighter-frame">
+          <section class="panel fighter-hud">
+            <div class="hud-top">
+              <span>DATA CARGO RDY</span><span>ALT OFF</span><span>COMMI COMM2</span><span>WPN PL20 &gt; 04</span><span>HUD XXX</span><span>ACMIG ON</span>
+            </div>
+            <svg class="hud-svg" viewBox="0 0 1280 640" aria-hidden="true">
+              <rect x="12" y="12" width="1256" height="616" fill="#030606" stroke="#d2ddd8" stroke-width="1.5"></rect>
+              <g stroke="#d2ddd8" stroke-width="1" fill="none">
+                <path d="M12 160 H1268 M12 468 H1268 M340 12 V628 M520 12 V628 M780 12 V628 M1010 12 V628"></path>
+                <rect x="50" y="196" width="200" height="210"></rect>
+                <rect x="380" y="198" width="310" height="208"></rect>
+                <rect x="1038" y="176" width="180" height="230"></rect>
+                <circle cx="656" cy="310" r="164"></circle>
+                <circle cx="656" cy="310" r="104"></circle>
+                <circle cx="656" cy="310" r="36"></circle>
+                <path d="M656 146 V474 M492 310 H820"></path>
+              </g>
+              <g stroke="#67e69a" fill="none" stroke-width="2">
+                <path d="M1120 200 L1170 254 L1206 420 L1136 386 L1066 420 L1100 254 Z"></path>
+                <path d="M1136 242 V396 M1170 254 V408"></path>
+                <path d="M404 506 L468 540 L482 596 L418 584 L358 596 L374 540 Z"></path>
+              </g>
+              <g stroke="#8ed6ff" fill="none">
+                <path d="M60 180 L82 164 L104 180 Z M316 180 L294 164 L272 180 Z M362 180 L384 164 L406 180 Z M990 180 L968 164 L946 180 Z"></path>
+              </g>
+              <g class="attitude">
+                <rect x="70" y="220" width="160" height="150" fill="#083845" stroke="#d2ddd8"></rect>
+                <rect x="70" y="300" width="160" height="70" fill="#6c4b20" opacity=".9"></rect>
+                <path d="M94 256 H206 M94 292 H206 M94 336 H206" stroke="#d2ddd8" stroke-dasharray="8 10"></path>
+                <circle cx="150" cy="300" r="4" fill="#e8f8f0"></circle>
+              </g>
+              <g fill="#6ce4a1" font-family="var(--mono)" font-size="15">
+                <text x="52" y="74">左</text>
+                <text x="256" y="74">自动</text>
+                <text x="386" y="86">仪表</text>
+                <text x="690" y="140">导航</text>
+                <text x="1124" y="140">武器</text>
+                <text x="1046" y="550">HUD</text>
+                <text x="1164" y="550">WPN</text>
+                <text x="88" y="594">CRS</text>
+                <text x="218" y="594">HDG</text>
+              </g>
+              <g class="warning-hud">
+                <rect x="468" y="274" width="344" height="74"></rect>
+                <text x="530" y="324">△ 机体受损 △</text>
+              </g>
+              <g class="gauges" stroke="#d6e2dd" fill="none">
+                <circle cx="114" cy="540" r="44"></circle>
+                <circle cx="238" cy="540" r="44"></circle>
+                <circle cx="420" cy="286" r="42"></circle>
+                <path d="M114 540 L96 514 M238 540 L266 518 M420 286 L443 254"></path>
+              </g>
+            </svg>
+          </section>
+
+          <div class="panel cockpit-panels">
+            <div class="mini-hud">
+              <svg viewBox="0 0 360 260" aria-hidden="true">
+                <rect width="360" height="260" fill="#040707" stroke="#d6e2dd"></rect>
+                <path d="M180 28 V234 M44 130 H316" stroke="#6f807a"></path>
+                <circle cx="180" cy="130" r="100" fill="none" stroke="#d6e2dd"></circle>
+                <path d="M180 130 L114 78 M180 130 L246 78" stroke="#62d990"></path>
+                <text x="18" y="34" fill="#62d990">COMM1 COMM2</text>
+              </svg>
+            </div>
+            <div class="mini-hud">
+              <svg viewBox="0 0 360 260" aria-hidden="true">
+                <rect width="360" height="260" fill="#040707" stroke="#d6e2dd"></rect>
+                <path d="M180 44 L248 92 L260 194 L182 160 L100 194 L114 92 Z" fill="none" stroke="#d6e2dd"></path>
+                <g fill="#62d990"><rect x="171" y="100" width="14" height="70"></rect><rect x="150" y="118" width="12" height="52"></rect><rect x="198" y="118" width="12" height="52"></rect></g>
+                <text x="118" y="230" fill="#62d990">WPN GUN 70%</text>
+              </svg>
+            </div>
+            <div class="mini-hud damaged">
+              <span>DAMAGED</span>
+              <div class="noise-bars"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="status-footer">
+        <span>LINE PROCESS</span>
+        <span>CN 15</span>
+        <span>POV 0.333528</span>
+        <span>DISC SPACEBUS</span>
+        <span>NETWORK SECURE</span>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - strong [ref=e7]: SELF COMPUTING SYSTEM
+      - text: LOCAL SYSTEM DEBUGGER · AUTO
+    - navigation "system menu" [ref=e8]:
+      - generic [ref=e9]: FILE
+      - generic [ref=e10]: EDIT
+      - generic [ref=e11]: VIEW
+      - generic [ref=e12]: PROJECT
+      - generic [ref=e13]: BUILD
+      - generic [ref=e14]: DEBUG
+      - generic [ref=e15]: TEAM
+      - generic [ref=e16]: TOOLS
+      - generic [ref=e17]: TEST
+      - generic [ref=e18]: ANALYZE
+      - generic [ref=e19]: WINDOW
+      - generic [ref=e20]: HELP
+    - generic [ref=e21]:
+      - generic [ref=e22]: SYSTEM19.0.022.3
+      - generic [ref=e23]: JURISDICTION
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - generic [ref=e26]: A
+      - generic [ref=e27]: B
+      - generic [ref=e28]: LOCAL SYSTEM DEBUGGER
+      - generic [ref=e29]: Auto
+      - generic [ref=e30]: Debug
+      - generic [ref=e31]: Test
+    - tablist "FUI screens" [ref=e32]:
+      - button "NETWORK" [ref=e33] [cursor=pointer]
+      - button "550W" [ref=e34] [cursor=pointer]
+      - button "GLOBAL" [ref=e35] [cursor=pointer]
+      - button "ELEVATOR" [ref=e36] [cursor=pointer]
+      - button "J-20C" [active] [ref=e37] [cursor=pointer]
+    - generic [ref=e38]: QUERY CODE
+  - text: REMOTE CONTROL ATTACKS COVERT INTEL ACQUISITION NETWORK WORMS RANSOMWARE ATTACKS OTHER ATTACKS
+  - region "j20c stealth fighter interface" [ref=e1454]:
+    - generic [ref=e1455]:
+      - generic [ref=e1456]:
+        - generic [ref=e1457]:
+          - generic [ref=e1458]: DATA CARGO RDY
+          - generic [ref=e1459]: ALT OFF
+          - generic [ref=e1460]: COMMI COMM2
+          - generic [ref=e1461]: WPN PL20 > 04
+          - generic [ref=e1462]: HUD XXX
+          - generic [ref=e1463]: ACMIG ON
+        - img [ref=e1464]:
+          - generic [ref=e1486]:
+            - generic [ref=e1487]: 左
+            - generic [ref=e1488]: 自动
+            - generic [ref=e1489]: 仪表
+            - generic [ref=e1490]: 导航
+            - generic [ref=e1491]: 武器
+            - generic [ref=e1492]: HUD
+            - generic [ref=e1493]: WPN
+            - generic [ref=e1494]: CRS
+            - generic [ref=e1495]: HDG
+          - generic [ref=e1498]: △ 机体受损 △
+      - generic [ref=e1504]:
+        - img [ref=e1506]:
+          - generic [ref=e1511]: COMM1 COMM2
+        - img [ref=e1513]:
+          - generic [ref=e1520]: WPN GUN 70%
+        - generic [ref=e1522]: DAMAGED
+  - generic [ref=e404]:
+    - generic [ref=e405]: LINE PROCESS
+    - generic [ref=e406]: CN 15
+    - generic [ref=e407]: POV 0.333528
+    - generic [ref=e408]: DISC SPACEBUS
+    - generic [ref=e409]: NETWORK SECURE
